@@ -1,0 +1,73 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+## 1. **Project Scope & Goals**
+
+* Build a desktop email assistant (local-only for MVP), supporting Windows, Linux, and MacOS.
+* IMAP support for enterprise mailboxes (Outlook, PrivateEmail).
+* AI-powered features: email summarization, classification, reply suggestions, etc.
+* Integrate the MCP protocol, enabling the AI model to autonomously call registered tools (similar to cline).
+* All sensitive data stored and processed locally.
+* Architecture must support future cloud deployment and multiple AI providers.
+
+## 2. **Tech Stack & Development Environment**
+
+* **Frontend:** Vue 3 + Electron (cross-platform desktop app, using Element Plus, Naive UI, or similar UI libraries).
+* **Backend:** FastAPI (Python), responsible for REST API, IMAP integration, MCP middleware, and context/session management.
+* **Database:** SQLite (local, lightweight, no extra installation required).
+* **AI Provider:** OpenRouter via MCP protocol (expandable to other LLMs/providers).
+* **MCP Tool Server:** Can be Node.js/TypeScript or Python based, MUST expose standard HTTP/JSON API per MCP specs.
+* **OS Compatibility:** All features must be tested on Windows, Linux, and MacOS.
+* **Dependency Management:** Use pnpm/yarn/npm for frontend; pip/poetry for backend. Maintain clear `requirements.txt` or `pyproject.toml`.
+
+## 3. **Code Standards & Branching**
+
+* Follow established coding standards (use ESLint/Prettier for JS/TS, Black/Flake8 for Python; enforce via CI).
+* All work in Git. Only reviewed feature branches can be merged into `main`.
+* Create feature branches for major functionalities; merge via Pull Requests only.
+* Each PR must have a clear description and, where applicable, include relevant test cases.
+
+## 4. **Functional Components & Responsibilities**
+
+### Core Components
+
+* **Account & Settings Management:** IMAP configuration, API keys, MCP provider settings (UI and API).
+* **Email Retrieval & Display:** Fetch, display, and categorize emails (Inbox, Read, Important, Labels/Tags).
+* **AI Assistant Panel:** Integrate with MCP for chat, summarization, classification, translation, and more.
+* **MCP Middleware:** Backend handles all MCP communication; frontend never directly interacts with MCP tool servers.
+* **Local Data Management:** Store all user/mail/AI/context data in local SQLite; sensitive data encrypted.
+
+## 5. **MCP Integration Rules**
+
+* All AI features (summarization, classification, reply suggestion, translation, etc.) **must be invoked via MCP protocol**—do NOT call AI providers directly from frontend or backend.
+* MCP tool registration/description must comply with the latest MCP specification and be managed centrally on the backend.
+* Support for multi-tool and multi-turn calls; backend must handle multi-step MCP toolchains as determined by the AI model.
+* MCP Tool Servers may be implemented in Node.js, Python, etc., but must follow RESTful standards and MCP data contract.
+
+## 6. **Security & Privacy**
+
+* All user-sensitive information (email accounts, passwords, API keys) must be encrypted at rest and never sent to the cloud.
+* Logs and AI context remain local; provide a way for users to clear all stored data.
+
+## 7. **Testing & Delivery**
+
+* Must package and test on all target platforms (Win/Linux/Mac) with functional parity.
+* Key features require both unit and integration tests.
+* Delivery must include clear documentation (README), setup instructions, and basic UI screenshots or demo video.
+* MVP delivers ONLY the core features described—do not start on future/extended features until MVP is complete.
+
+## 8. **Collaboration & Documentation**
+
+* All requirements, designs, and significant changes must be documented (in `docs/` or equivalent).
+* Weekly progress updates and transparent discussion of blockers.
+* Key technical decisions should be explained and justified in documentation.
+* English is preferred for all documentation and comments.
+
+## 9. **Extensibility & Architecture**
+
+* Design with extensibility in mind: multiple accounts, multiple models/providers, additional MCP tools, and eventual cloud or mobile support.
+* Keep all core modules loosely coupled and maintainable for easy refactoring and future iteration.
+
+> **All contributors must strictly follow these rules for MVP delivery. Any major changes to the technical or business scope must be discussed and agreed upon by the team.**
