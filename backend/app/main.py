@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.services.model_service import fetch_models_from_openrouter
 
 app = FastAPI(
     title="ZeusInbox API",
@@ -25,6 +26,10 @@ async def root():
 # app.include_router(email.router, prefix="/api/email", tags=["email"])
 # app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
 # app.include_router(mcp.router, prefix="/api/mcp", tags=["mcp"])
+from app.api import model
+app.include_router(model.router, prefix="/api", tags=["model"])
+
+fetch_models_from_openrouter()
 
 if __name__ == "__main__":
     import uvicorn

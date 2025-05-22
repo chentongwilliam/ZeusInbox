@@ -1,20 +1,39 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterView } from 'vue-router'
+import Sidebar from './components/Sidebar.vue'
+import { StagewiseToolbar } from '@stagewise/toolbar-vue'
+import { computed } from 'vue'
+
+const isDevelopment = computed(() => process.env.NODE_ENV === 'development')
+
+const stagewiseConfig = {
+  plugins: []
+}
 </script>
 
 <template>
-  <div>
-    <a href="https://electron-vite.github.io" target="_blank">
-      <img src="/electron-vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="flex h-screen w-screen bg-gray-100">
+    <Sidebar />
+    <main class="flex-1 p-10 overflow-hidden bg-gray-100">
+      <StagewiseToolbar v-if="isDevelopment" :config="stagewiseConfig" />
+      <RouterView />
+    </main>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
 <style scoped>
+html, body, #app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#app {
+  font-family: 'Inter', 'Helvetica Neue', Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background: #f7f8fa;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
