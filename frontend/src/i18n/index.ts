@@ -12,7 +12,16 @@ const en = {
       username: 'Username',
       password: 'Password',
       isActive: 'Active',
-      save: 'Save Settings'
+      save: 'Save Settings',
+      validating: "Validating email...",
+      imapServerTooltip: 'For example: mail.privateemail.com',
+      imapPortTooltip: 'SSL port is usually 993, non-SSL port is usually 143',
+      requiredFields: 'Please fill in all required fields',
+      invalidPort: 'Please enter a valid port number (1-65535)',
+      connectionSuccess: 'Email connection successful!',
+      saveSuccess: 'Settings saved successfully!',
+      connectionFailed: 'Email connection failed',
+      saveError: 'Error saving email settings'
     },
     ai: {
       title: 'AI Settings',
@@ -117,7 +126,16 @@ const de = {
       username: 'Benutzername',
       password: 'Passwort',
       isActive: 'Aktiv',
-      save: 'Einstellungen speichern'
+      save: 'Einstellungen speichern',
+      validating: "E-Mail wird überprüft...",
+      imapServerTooltip: 'Beispiel: mail.privateemail.com',
+      imapPortTooltip: 'SSL-Port ist normalerweise 993, nicht-SSL-Port ist normalerweise 143',
+      requiredFields: 'Bitte füllen Sie alle erforderlichen Felder aus',
+      invalidPort: 'Bitte geben Sie eine gültige Portnummer ein (1-65535)',
+      connectionSuccess: 'E-Mail-Verbindung erfolgreich!',
+      saveSuccess: 'Einstellungen erfolgreich gespeichert!',
+      connectionFailed: 'E-Mail-Verbindung fehlgeschlagen',
+      saveError: 'Fehler beim Speichern der E-Mail-Einstellungen'
     },
     ai: {
       title: 'KI-Einstellungen',
@@ -222,7 +240,16 @@ const zh = {
       username: '用户名',
       password: '密码',
       isActive: '是否激活',
-      save: '保存设置'
+      save: '保存设置',
+      validating: "正在验证邮箱...",
+      imapServerTooltip: '例如：mail.privateemail.com',
+      imapPortTooltip: 'SSL端口通常是993，非SSL端口通常是143',
+      requiredFields: '请填写所有必填字段',
+      invalidPort: '请输入有效的端口号（1-65535）',
+      connectionSuccess: '邮箱连接成功！',
+      saveSuccess: '设置保存成功！',
+      connectionFailed: '邮箱连接失败',
+      saveError: '保存邮箱设置时出错'
     },
     ai: {
       title: 'AI设置',

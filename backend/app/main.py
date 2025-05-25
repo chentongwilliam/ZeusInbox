@@ -22,11 +22,8 @@ async def root():
     return {"message": "Welcome to ZeusInbox API"}
 
 # Import and include routers
-# from app.api import email, auth, mcp
-# app.include_router(email.router, prefix="/api/email", tags=["email"])
-# app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
-# app.include_router(mcp.router, prefix="/api/mcp", tags=["mcp"])
-from app.api import model
+from app.api import email, model
+app.include_router(email.router, prefix="/api/email", tags=["email"])
 app.include_router(model.router, prefix="/api", tags=["model"])
 
 fetch_models_from_openrouter()

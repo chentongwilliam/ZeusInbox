@@ -22,26 +22,46 @@
         <div v-if="currentSection === 'email'" class="settings-section">
           <h2>{{ $t('settings.email.title') }}</h2>
           <el-form :model="emailForm" label-width="120px">
-            <el-form-item :label="$t('settings.email.email')">
+            <el-form-item :label="$t('settings.email.email')" required>
               <el-input v-model="emailForm.email" :placeholder="$t('settings.email.email')" />
             </el-form-item>
-            <el-form-item :label="$t('settings.email.imapServer')">
-              <el-input v-model="emailForm.imap_server" placeholder="imap.example.com" />
+            <el-form-item :label="$t('settings.email.imapServer')" required>
+              <el-input v-model="emailForm.imap_server" placeholder="imap.example.com">
+                <template #append>
+                  <el-tooltip :content="$t('settings.email.imapServerTooltip')" placement="top">
+                    <el-icon><QuestionFilled /></el-icon>
+                  </el-tooltip>
+                </template>
+              </el-input>
             </el-form-item>
-            <el-form-item :label="$t('settings.email.imapPort')">
-              <el-input v-model="emailForm.imap_port" placeholder="993" />
+            <el-form-item :label="$t('settings.email.imapPort')" required>
+              <el-input v-model="emailForm.imap_port" placeholder="993">
+                <template #append>
+                  <el-tooltip :content="$t('settings.email.imapPortTooltip')" placement="top">
+                    <el-icon><QuestionFilled /></el-icon>
+                  </el-tooltip>
+                </template>
+              </el-input>
             </el-form-item>
-            <el-form-item :label="$t('settings.email.username')">
+            <el-form-item :label="$t('settings.email.username')" required>
               <el-input v-model="emailForm.username" :placeholder="$t('settings.email.username')" />
             </el-form-item>
-            <el-form-item :label="$t('settings.email.password')">
+            <el-form-item :label="$t('settings.email.password')" required>
               <el-input type="password" v-model="emailForm.password" :placeholder="$t('settings.email.password')" />
             </el-form-item>
             <el-form-item :label="$t('settings.email.isActive')">
               <el-switch v-model="emailForm.is_active" />
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="saveEmailSettings">{{ $t('settings.email.save') }}</el-button>
+              <el-button 
+                type="primary" 
+                @click="saveEmailSettings" 
+                :loading="isValidatingEmail"
+                :disabled="isValidatingEmail"
+              >
+                {{ isValidatingEmail ? $t('settings.email.validating') : $t('settings.email.save') }}
+              </el-button>
+            
             </el-form-item>
           </el-form>
         </div>
@@ -221,12 +241,22 @@
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, watch, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { QuestionFilled } from '@element-plus/icons-vue'
 
 interface ModelOption {
   label: string;
   value: string;
   desc?: string;
   limits?: string;
+}
+
+interface Email {
+  id: string;
+  subject: string;
+  from: string;
+  date: string;
+  body: string;
 }
 
 interface MCPServer {
@@ -262,7 +292,7 @@ const currentLocale = computed({
 const emailForm = reactive({
   email: '',
   imap_server: '',
-  imap_port: '',
+  imap_port: '993',  // 默认SSL端口
   username: '',
   password: '',
   is_active: true
@@ -409,10 +439,57 @@ const backupSettings = reactive({
   frequency: 'daily'
 })
 
+const isValidatingEmail = ref(false)
+
 // 保存邮箱设置
-const saveEmailSettings = () => {
-  // TODO: 实现保存逻辑
-  console.log('保存邮箱设置:', emailForm)
+const saveEmailSettings = async () => {
+  try {
+    // 表单验证
+    if (!emailForm.email || !emailForm.imap_server || !emailForm.imap_port || !emailForm.username || !emailForm.password) {
+      ElMessage.warning(t('settings.email.requiredFields'));
+      return;
+    }
+
+    // 验证端口号
+    const port = parseInt(emailForm.imap_port);
+    if (isNaN(port) || port <= 0 || port > 65535) {
+      ElMessage.warning(t('settings.email.invalidPort'));
+      return;
+    }
+
+    isValidatingEmail.value = true;
+
+    // 调用后端API测试邮箱连接
+    const response = await fetch('/api/email/test-connection', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: emailForm.email,
+        imap_server: emailForm.imap_server,
+        imap_port: port,
+        username: emailForm.username,
+        password: emailForm.password
+      })
+    });
+
+    const data = await response.json();
+    
+    if (response.ok) {
+      // 如果连接成功，显示成功消息和邮件列表
+      ElMessage.success(t('settings.email.saveSuccess'));
+      
+    } else {
+      // 如果连接失败，显示错误消息
+      ElMessage.error(data.detail || t('settings.email.connectionFailed'));
+    }
+  } catch (error) {
+    console.error('save email settings error:', error);
+    ElMessage.error(t('settings.email.saveError'));
+  } finally {
+    isValidatingEmail.value = false;
+  }
 }
 
 // 保存AI设置

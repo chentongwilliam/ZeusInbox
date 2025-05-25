@@ -4,6 +4,10 @@ from typing import List
 from app.db.database import get_db
 from app.models import email_account as models
 from app.schemas import email_account as schemas
+from pydantic import BaseModel
+from app.services.email_service import EmailService
+from app.models.email_account import EmailAccount
+from app.utils.env_manager import update_email_settings
 
 router = APIRouter()
 
@@ -66,4 +70,57 @@ def delete_email_account(
     
     db.delete(db_account)
     db.commit()
-    return {"message": "Email account deleted successfully"} 
+    return {"message": "Email account deleted successfully"}
+
+class EmailSettings(BaseModel):
+    email: str
+    imap_server: str
+    imap_port: int
+    username: str
+    password: str
+
+@router.post("/test-connection")
+async def test_email_connection(settings: EmailSettings, db: Session = Depends(get_db)):
+    """Test email connection and return recent emails"""
+    try:
+        # Create a temporary email account object
+        account = EmailAccount(
+            email=settings.email,
+            imap_server=settings.imap_server,
+            imap_port=settings.imap_port,
+            username=settings.username,
+            password=settings.password
+        )
+        
+        # Create email service instance
+        email_service = EmailService(account)
+        
+        # Test connection
+        success, message = await email_service.test_connection()
+        if not success:
+            raise HTTPException(status_code=400, detail=message)
+        
+        # 加密密码
+        encrypted_data = email_service.encrypt_email_data(settings.dict())
+        
+        # 检查是否已存在相同邮箱的账户
+        existing_account = db.query(EmailAccount).filter(EmailAccount.email == settings.email).first()
+        
+        if existing_account:
+            # 更新现有账户
+            for key, value in encrypted_data.items():
+                setattr(existing_account, key, value)
+        else:
+            # 创建新账户
+            new_account = EmailAccount(**encrypted_data)
+            db.add(new_account)
+        
+        db.commit()
+        
+        return {
+            "status": "success",
+            "message": message,
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e)) 

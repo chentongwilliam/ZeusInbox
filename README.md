@@ -2,6 +2,19 @@
 
 ZeusInbox is a desktop email assistant that combines the power of AI with email management. It helps you manage your emails more efficiently through AI-powered features like automatic summarization, classification, and smart reply suggestions.
 
+---
+
+**Current Compatibility Notice**
+
+⚠️ **At present, this project is fully adapted and tested only for privateemail.com mailboxes. Other email providers (such as Outlook, Gmail, QQ, 163, etc.) may not work out of the box due to differences in IMAP protocol implementation and authentication methods. Developers need to test and adapt the code as needed for other providers.**
+
+- The dedicated adaptation code for privateemail is implemented in `backend/app/services/email_service.py`, specifically in the `get_privateemail_emails` method and the automatic dispatch logic within the `get_emails` method.
+- If you need to support other email providers (such as Outlook, Gmail, etc.), please add provider-specific parsing and authentication logic in the `get_emails` method based on the IMAP server address.
+- Important: Outlook/Office365 has now completely disabled IMAP login with username and password. OAuth2.0 authentication is required. See the official Microsoft notice: [Deprecation of Basic authentication in Exchange Online](https://learn.microsoft.com/en-us/exchange/clients-and-mobile-in-exchange-online/deprecation-of-basic-authentication-exchange-online). If you need to adapt for Outlook, please refer to the official documentation and implement the OAuth2.0 flow.
+- If you encounter compatibility issues with fetch, search, or email content parsing for other providers, please extend `email_service.py` with provider-specific methods similar to the privateemail example.
+
+---
+
 ## Features
 
 - 📧 Support for multiple email accounts (IMAP)
