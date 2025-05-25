@@ -93,6 +93,15 @@ const en = {
   },
   mail: {
     noMail: 'No emails yet'
+  },
+  chat: {
+    examples: {
+      translate: 'Translate to Chinese',
+      summarize: 'Summarize this email'
+    },
+    input: {
+      placeholder: 'Type your message...'
+    }
   }
 }
 
@@ -189,6 +198,15 @@ const de = {
   },
   mail: {
     noMail: 'Noch keine E-Mails'
+  },
+  chat: {
+    examples: {
+      translate: 'Ins Chinesische übersetzen',
+      summarize: 'E-Mail zusammenfassen'
+    },
+    input: {
+      placeholder: 'Geben Sie Ihre Nachricht ein...'
+    }
   }
 }
 
@@ -285,6 +303,15 @@ const zh = {
   },
   mail: {
     noMail: '暂无邮件'
+  },
+  chat: {
+    examples: {
+      translate: '翻译成中文',
+      summarize: '总结这封邮件'
+    },
+    input: {
+      placeholder: '输入消息...'
+    }
   }
 }
 
