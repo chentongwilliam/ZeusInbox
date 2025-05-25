@@ -82,7 +82,8 @@ const en = {
     }
   },
   sidebar: {
-    aiAutomation: 'AI Automation',
+    aiAssistant: 'AI Personal Assistant',
+    prompt: 'Prompt',
     mail: 'Mail',
     bulkUnsubscribe: 'Bulk Unsubscribe',
     analytics: 'Analytics',
@@ -177,7 +178,8 @@ const de = {
     }
   },
   sidebar: {
-    aiAutomation: 'KI-Automatisierung',
+    aiAssistant: 'AI Personal Assistant',
+    prompt: 'Prompt',
     mail: 'E-Mail',
     bulkUnsubscribe: 'Massen-Abmeldung',
     analytics: 'Analytik',
@@ -272,7 +274,8 @@ const zh = {
     }
   },
   sidebar: {
-    aiAutomation: 'AI自动化',
+    aiAssistant: 'AI个人助理',
+    prompt: '提示词',
     mail: '邮件',
     bulkUnsubscribe: '批量退订',
     analytics: '数据分析',

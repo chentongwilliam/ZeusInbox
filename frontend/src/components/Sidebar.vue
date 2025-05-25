@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 const menu = [
-  { id: 'aiAutomation', path: '/automation', icon: '🤖' },
+  { id: 'aiAssistant', path: '/ai-assistant', icon: '🤖' },
   { id: 'mail', path: '/mail', icon: '📧' },
   { id: 'bulkUnsubscribe', path: '/unsubscribe', icon: '📤' },
   { id: 'analytics', path: '/analytics', icon: '📊' },

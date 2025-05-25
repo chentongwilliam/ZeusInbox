@@ -3,7 +3,7 @@
     <!-- 顶部导航栏 -->
     <div class="flex items-center justify-between mb-6">
       <div class="flex gap-2">
-        <button class="px-4 py-2 rounded-t-lg bg-white border-b-2 border-green-500 font-semibold text-gray-900 shadow-none">Automations</button>
+        <button class="px-4 py-2 rounded-t-lg bg-white border-b-2 border-green-500 font-semibold text-gray-900 shadow-none">Rules</button>
         <button class="px-4 py-2 rounded-t-lg bg-gray-100 text-gray-500 shadow-none">Pending</button>
         <button class="px-4 py-2 rounded-t-lg bg-gray-100 text-gray-500 shadow-none">History</button>
         <button class="px-4 py-2 rounded-t-lg bg-gray-100 text-gray-500 shadow-none">Test</button>
