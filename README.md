@@ -93,4 +93,50 @@ MIT License
 
 ## Contributing
 
-Please read our contributing guidelines before submitting pull requests. 
+Please read our contributing guidelines before submitting pull requests.
+
+## Extending Global Settings
+
+If you want to add new global settings (such as additional preferences, feature toggles, etc.) that should be loaded and managed across the entire application, follow these steps:
+
+### 1. Backend: Add to .env and API
+- Add your new setting to the `.env` file (e.g., `NEW_SETTING=value`).
+- In `backend/app/api/settings.py`, update the `/api/settings/all` endpoint to include your new setting in the returned dictionary. For example:
+  ```python
+  return {
+      "language": env_vars.get("LANGUAGE", "en"),
+      "email_update_interval": env_vars.get("EMAIL_UPDATE_INTERVAL", 5),
+      "new_setting": env_vars.get("NEW_SETTING", "default_value")
+  }
+  ```
+- If you need to allow updating this setting from the frontend, add a corresponding API endpoint to save it to `.env`.
+
+### 2. Frontend: Add to Global Settings
+- In `frontend/src/main.ts`, add your new setting to the `globalSettings` reactive object:
+  ```js
+  export const globalSettings = reactive({
+    language: 'en',
+    emailUpdateInterval: 5,
+    newSetting: 'default_value'
+  })
+  ```
+- Update the `loadGlobalSettings` function to read the new setting from the backend response and assign it to `globalSettings`:
+  ```js
+  if (data.new_setting) {
+    globalSettings.newSetting = data.new_setting;
+  }
+  ```
+- Use `globalSettings.newSetting` anywhere in your Vue components to access or display the value.
+
+### 3. Usage in Components
+- Import and use `globalSettings` in any component:
+  ```js
+  import { globalSettings } from '../main'
+  // ...
+  console.log(globalSettings.newSetting)
+  ```
+- To update the setting and persist it, call the appropriate backend API and update `globalSettings` accordingly.
+
+### 4. Summary
+- All global settings should be loaded once at app startup and managed via the `globalSettings` object.
+- This approach ensures consistency and makes it easy to add, update, or use new global settings throughout the app. 

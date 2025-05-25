@@ -78,6 +78,7 @@ class EmailSettings(BaseModel):
     imap_port: int
     username: str
     password: str
+    update_interval: int
 
 @router.post("/test-connection")
 async def test_email_connection(settings: EmailSettings, db: Session = Depends(get_db)):
@@ -122,5 +123,46 @@ async def test_email_connection(settings: EmailSettings, db: Session = Depends(g
             "message": message,
         }
         
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/settings")
+async def get_email_settings(db: Session = Depends(get_db)):
+    """Get the first active email account settings"""
+    try:
+        # 获取第一个邮箱账户
+        account = db.query(EmailAccount).first()
+        if not account:
+            return None
+            
+        # 创建 EmailService 实例来解密密码
+        email_service = EmailService(account)
+        
+        # 返回解密后的设置
+        return {
+            "email": account.email,
+            "imap_server": account.imap_server,
+            "imap_port": account.imap_port,
+            "username": account.username,
+            "password": email_service.decrypt_email_data(account.password)
+        }
+    except Exception as e:
+        # 如果发生任何错误，返回 None
+        print(f"Error getting email settings: {e}")
+        return None
+
+@router.post("/save-settings")
+async def save_email_settings(settings: EmailSettings):
+    """Save email settings and update .env file"""
+    try:
+        update_email_settings(
+            email=settings.email,
+            imap_server=settings.imap_server,
+            imap_port=settings.imap_port,
+            username=settings.username,
+            password=settings.password,
+            update_interval=settings.update_interval
+        )
+        return {"status": "success", "message": "Settings updated successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e)) 

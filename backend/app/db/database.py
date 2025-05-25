@@ -17,6 +17,16 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 
+# Import all models here to ensure they are registered with Base
+from app.models.email_account import EmailAccount
+
+# Create all tables
+def init_db():
+    Base.metadata.create_all(bind=engine)
+
+# Initialize database on module import
+init_db()
+
 # Dependency
 def get_db():
     db = SessionLocal()

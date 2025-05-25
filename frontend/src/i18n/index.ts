@@ -21,7 +21,11 @@ const en = {
       connectionSuccess: 'Email connection successful!',
       saveSuccess: 'Settings saved successfully!',
       connectionFailed: 'Email connection failed',
-      saveError: 'Error saving email settings'
+      saveError: 'Error saving email settings',
+      updateInterval: 'Auto Update Interval',
+      updateIntervalTooltip: 'Set how often to check for new emails (1-60 minutes)',
+      minutes: 'minutes',
+      updateSuccess: 'Settings updated successfully!'
     },
     ai: {
       title: 'AI Settings',
@@ -135,7 +139,11 @@ const de = {
       connectionSuccess: 'E-Mail-Verbindung erfolgreich!',
       saveSuccess: 'Einstellungen erfolgreich gespeichert!',
       connectionFailed: 'E-Mail-Verbindung fehlgeschlagen',
-      saveError: 'Fehler beim Speichern der E-Mail-Einstellungen'
+      saveError: 'Fehler beim Speichern der E-Mail-Einstellungen',
+      updateInterval: 'Automatisches Update-Intervall',
+      updateIntervalTooltip: 'Legen Sie fest, wie oft nach neuen E-Mails gesucht werden soll (1-60 Minuten)',
+      minutes: 'Minuten',
+      updateSuccess: 'Einstellungen erfolgreich aktualisiert!'
     },
     ai: {
       title: 'KI-Einstellungen',
@@ -249,7 +257,11 @@ const zh = {
       connectionSuccess: '邮箱连接成功！',
       saveSuccess: '设置保存成功！',
       connectionFailed: '邮箱连接失败',
-      saveError: '保存邮箱设置时出错'
+      saveError: '保存邮箱设置时出错',
+      updateInterval: '自动更新间隔',
+      updateIntervalTooltip: '设置检查新邮件的频率（1-60分钟）',
+      minutes: '分钟',
+      updateSuccess: '设置更新成功！'
     },
     ai: {
       title: 'AI设置',

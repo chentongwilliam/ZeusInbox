@@ -36,13 +36,19 @@ def write_env(env_vars: Dict[str, Any]) -> None:
         for key, value in existing_vars.items():
             f.write(f"{key}={value}\n")
 
-def update_email_settings(email: str, imap_server: str, imap_port: int, username: str, password: str) -> None:
+def update_email_settings(email: str, imap_server: str, imap_port: int, username: str, password: str, update_interval: int) -> None:
     """Update email settings in .env file"""
     env_vars = {
-        'EMAIL_ADDRESS': email,
-        'IMAP_SERVER': imap_server,
-        'IMAP_PORT': str(imap_port),
-        'EMAIL_USERNAME': username,
-        'EMAIL_PASSWORD': password
+        'EMAIL_UPDATE_INTERVAL': str(update_interval)
     }
-    write_env(env_vars) 
+    write_env(env_vars)
+
+def update_language_setting(language: str) -> None:
+    """Update language setting in .env file"""
+    env_vars = {'LANGUAGE': language}
+    write_env(env_vars)
+
+def get_language_setting() -> str:
+    """Get language setting from .env file, default to 'en' if not set"""
+    env_vars = read_env()
+    return env_vars.get('LANGUAGE', 'en') 

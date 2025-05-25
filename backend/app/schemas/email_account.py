@@ -18,11 +18,9 @@ class EmailAccountUpdate(BaseModel):
     imap_port: Optional[int] = None
     username: Optional[str] = None
     password: Optional[str] = None
-    is_active: Optional[bool] = None
 
 class EmailAccount(EmailAccountBase):
     id: int
-    is_active: bool
     created_at: datetime
     updated_at: Optional[datetime] = None
 

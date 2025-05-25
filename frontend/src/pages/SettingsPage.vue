@@ -21,7 +21,7 @@
         <!-- 邮箱设置 -->
         <div v-if="currentSection === 'email'" class="settings-section">
           <h2>{{ $t('settings.email.title') }}</h2>
-          <el-form :model="emailForm" label-width="120px">
+          <el-form :model="emailForm" label-width="200px" v-loading="isLoadingEmailSettings">
             <el-form-item :label="$t('settings.email.email')" required>
               <el-input v-model="emailForm.email" :placeholder="$t('settings.email.email')" />
             </el-form-item>
@@ -49,8 +49,21 @@
             <el-form-item :label="$t('settings.email.password')" required>
               <el-input type="password" v-model="emailForm.password" :placeholder="$t('settings.email.password')" />
             </el-form-item>
-            <el-form-item :label="$t('settings.email.isActive')">
-              <el-switch v-model="emailForm.is_active" />
+            <el-form-item :label="$t('settings.email.updateInterval')">
+              <el-input-number 
+                v-model="globalSettings.emailUpdateInterval" 
+                :min="1" 
+                :max="60"
+                :step="1"
+                :placeholder="$t('settings.email.updateInterval')"
+              >
+                <template #append>
+                  <el-tooltip :content="$t('settings.email.updateIntervalTooltip')" placement="top">
+                    <el-icon><QuestionFilled /></el-icon>
+                  </el-tooltip>
+                </template>
+              </el-input-number>
+              <span class="unit-label">{{ $t('settings.email.minutes') }}</span>
             </el-form-item>
             <el-form-item>
               <el-button 
@@ -69,7 +82,7 @@
         <!-- AI设置 -->
         <div v-if="currentSection === 'ai'" class="settings-section">
           <h2>{{ $t('settings.ai.title') }}</h2>
-          <el-form label-width="160px">
+          <el-form label-width="200px">
             <el-form-item :label="$t('settings.ai.apiProvider')">
               <el-select v-model="aiSettings.apiProvider" filterable>
                 <el-option label="OpenRouter" value="OpenRouter" />
@@ -167,7 +180,7 @@
         <!-- 语言设置 -->
         <div v-if="currentSection === 'language'" class="settings-section">
           <h2>{{ $t('settings.language.title') }}</h2>
-          <el-form label-width="120px">
+          <el-form label-width="200px">
             <el-form-item :label="$t('settings.language.current')">
               <el-select v-model="currentLocale" @change="changeLanguage">
                 <el-option label="English" value="en" />
@@ -181,7 +194,7 @@
         <!-- 主题设置 -->
         <div v-if="currentSection === 'theme'" class="settings-section">
           <h2>{{ $t('settings.theme.title') }}</h2>
-          <el-form label-width="120px">
+          <el-form label-width="200px">
             <el-form-item :label="$t('settings.theme.mode')">
               <el-radio-group v-model="themeSettings.mode">
                 <el-radio label="light">{{ $t('settings.theme.light') }}</el-radio>
@@ -195,7 +208,7 @@
         <!-- 通知设置 -->
         <div v-if="currentSection === 'notification'" class="settings-section">
           <h2>{{ $t('settings.notification.title') }}</h2>
-          <el-form label-width="120px">
+          <el-form label-width="200px">
             <el-form-item :label="$t('settings.notification.email')">
               <el-switch v-model="notificationSettings.email" />
             </el-form-item>
@@ -208,7 +221,7 @@
         <!-- 数据备份 -->
         <div v-if="currentSection === 'backup'" class="settings-section">
           <h2>{{ $t('settings.backup.title') }}</h2>
-          <el-form label-width="120px">
+          <el-form label-width="200px">
             <el-form-item :label="$t('settings.backup.auto')">
               <el-switch v-model="backupSettings.auto" />
             </el-form-item>
@@ -243,6 +256,7 @@ import { ref, reactive, computed, onMounted, watch, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { QuestionFilled } from '@element-plus/icons-vue'
+import { globalSettings } from '../main'
 
 interface ModelOption {
   label: string;
@@ -284,8 +298,8 @@ const sections = [
 
 const currentSection = ref('email')
 const currentLocale = computed({
-  get: () => locale.value,
-  set: (value) => locale.value = value
+  get: () => globalSettings.language,
+  set: (value) => { globalSettings.language = value; locale.value = value; }
 })
 
 // 邮箱设置表单
@@ -294,8 +308,7 @@ const emailForm = reactive({
   imap_server: '',
   imap_port: '993',  // 默认SSL端口
   username: '',
-  password: '',
-  is_active: true
+  password: ''
 })
 
 // AI设置
@@ -411,6 +424,9 @@ function stopServer(server: MCPServer) {
 onMounted(() => {
   fetchServers()
   refreshTimer = setInterval(refreshAllServers, 5000)
+  // 获取邮箱设置
+  fetchEmailSettings()
+  // 语言和全局设置已由main.ts统一加载
 })
 onUnmounted(() => {
   if (refreshTimer) clearInterval(refreshTimer)
@@ -440,6 +456,32 @@ const backupSettings = reactive({
 })
 
 const isValidatingEmail = ref(false)
+const isLoadingEmailSettings = ref(false)
+
+// 获取邮箱设置
+const fetchEmailSettings = async () => {
+  try {
+    isLoadingEmailSettings.value = true
+    const response = await fetch('/api/email/settings')
+    if (response.ok) {
+      const data = await response.json()
+      // 只有当后端返回数据时才更新表单
+      if (data) {
+        emailForm.email = data.email || ''
+        emailForm.imap_server = data.imap_server || ''
+        emailForm.imap_port = data.imap_port || '993'
+        emailForm.username = data.username || ''
+        emailForm.password = data.password || ''
+      }
+    }
+    // 如果请求失败或没有数据，保持表单为空，不显示错误提示
+  } catch (error) {
+    console.error('Failed to fetch email settings:', error)
+    // 发生错误时保持表单为空，不显示错误提示
+  } finally {
+    isLoadingEmailSettings.value = false
+  }
+}
 
 // 保存邮箱设置
 const saveEmailSettings = async () => {
@@ -470,18 +512,32 @@ const saveEmailSettings = async () => {
         imap_server: emailForm.imap_server,
         imap_port: port,
         username: emailForm.username,
-        password: emailForm.password
+        password: emailForm.password,
+        update_interval: globalSettings.emailUpdateInterval
       })
     });
 
     const data = await response.json();
     
     if (response.ok) {
-      // 如果连接成功，显示成功消息和邮件列表
-      ElMessage.success(t('settings.email.saveSuccess'));
+      // 如果连接成功，保存设置到.env
+      await fetch('/api/email/save-settings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: emailForm.email,
+          imap_server: emailForm.imap_server,
+          imap_port: port,
+          username: emailForm.username,
+          password: emailForm.password,
+          update_interval: globalSettings.emailUpdateInterval
+        })
+      });
       
+      ElMessage.success(t('settings.email.updateSuccess'));
     } else {
-      // 如果连接失败，显示错误消息
       ElMessage.error(data.detail || t('settings.email.connectionFailed'));
     }
   } catch (error) {
@@ -505,10 +561,20 @@ const backupNow = () => {
 }
 
 // 切换语言
-const changeLanguage = (lang: string) => {
+const changeLanguage = async (lang: string) => {
   locale.value = lang
   // 保存语言设置到本地存储
   localStorage.setItem('language', lang)
+  // 保存到后端.env
+  try {
+    await fetch('/api/settings/language/save', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ language: lang })
+    })
+  } catch (e) {
+    // 可选：失败提示
+  }
 }
 </script>
 
@@ -576,6 +642,11 @@ const changeLanguage = (lang: string) => {
 
 .about-content {
   line-height: 1.6;
+  color: #666;
+}
+
+.unit-label {
+  margin-left: 8px;
   color: #666;
 }
 </style> 

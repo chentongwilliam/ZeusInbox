@@ -179,4 +179,12 @@ class EmailService:
         """加密邮箱数据"""
         encrypted_data = data.copy()
         encrypted_data['password'] = encrypt_data(data['password'])
-        return encrypted_data 
+        return encrypted_data
+
+    def decrypt_email_data(self, encrypted_password: str) -> str:
+        """解密邮箱密码"""
+        try:
+            return decrypt_data(encrypted_password)
+        except Exception as e:
+            logger.error(f"Failed to decrypt password: {e}")
+            return "" 
