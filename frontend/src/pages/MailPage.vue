@@ -1,41 +1,45 @@
 <template>
   <div class="w-full h-full flex">
-    <!-- 主内容区域 -->
+    <!-- 主内容区域：只在这里切换列表和详情 -->
     <div class="flex-1 flex flex-col">
-      <!-- 顶部标签栏 -->
-      <div class="flex items-center gap-2 mb-6">
-        <button class="px-4 py-2 rounded-t-lg bg-white border-b-2 border-green-500 font-semibold text-gray-900 shadow-none">To Reply</button>
-        <button class="px-4 py-2 rounded-t-lg bg-gray-100 text-gray-500 shadow-none">Waiting</button>
-        <button class="px-4 py-2 rounded-t-lg bg-gray-100 text-gray-500 shadow-none">Done</button>
-      </div>
-      <!-- 邮件列表 -->
-      <div class="bg-white rounded-xl shadow border overflow-x-auto flex-1 flex flex-col">
-        <div v-if="loading" class="text-gray-400 text-lg py-12 text-center">Loading...</div>
-        <div v-else-if="error" class="text-red-500 text-lg py-12 text-center">{{ error }}</div>
-        <div v-else-if="!emails.length" class="text-gray-400 text-lg py-12 text-center">{{ $t('mail.noMail') }}</div>
-        <div v-else>
-          <div v-for="mail in emails" :key="mail.id" class="flex items-center border-b px-4 py-3 hover:bg-gray-50 transition-all">
-            <div class="w-1/5 font-bold truncate">{{ mail.from }}</div>
-            <div class="w-2/5 truncate">{{ mail.subject }}</div>
-            <div class="w-1/6 text-right text-gray-500">{{ formatMailTime(mail.date) }}</div>
-            <div class="flex-1 text-gray-400 text-sm truncate ml-4">{{ mail.snippet }}</div>
+      <template v-if="!showDetail">
+        <!-- 顶部标签栏 -->
+        <div class="flex items-center gap-2 mb-6">
+          <button class="px-4 py-2 rounded-t-lg bg-white border-b-2 border-green-500 font-semibold text-gray-900 shadow-none">To Reply</button>
+          <button class="px-4 py-2 rounded-t-lg bg-gray-100 text-gray-500 shadow-none">Waiting</button>
+          <button class="px-4 py-2 rounded-t-lg bg-gray-100 text-gray-500 shadow-none">Done</button>
+        </div>
+        <!-- 邮件列表 -->
+        <div class="bg-white rounded-xl shadow border overflow-x-auto flex-1 flex flex-col">
+          <div v-if="loading" class="text-gray-400 text-lg py-12 text-center">Loading...</div>
+          <div v-else-if="error" class="text-red-500 text-lg py-12 text-center">{{ error }}</div>
+          <div v-else-if="!emails.length" class="text-gray-400 text-lg py-12 text-center">{{ $t('mail.noMail') }}</div>
+          <div v-else>
+            <div v-for="mail in emails" :key="mail.id" class="flex items-center border-b px-4 py-3 hover:bg-gray-50 transition-all cursor-pointer"
+              @click="openMailDetail(mail)">
+              <div class="w-1/5 font-bold truncate">{{ mail.from }}</div>
+              <div class="w-2/5 truncate">{{ mail.subject }}</div>
+              <div class="w-1/6 text-right text-gray-500">{{ formatMailTime(mail.date) }}</div>
+              <div class="flex-1 text-gray-400 text-sm truncate ml-4">{{ mail.snippet }}</div>
+            </div>
           </div>
         </div>
-      </div>
+      </template>
+      <template v-else>
+        <MailDetail :mail="selectedMail" @close="closeMailDetail" />
+      </template>
     </div>
-
     <!-- 可调整宽度的分隔条 -->
     <div 
       class="w-1 cursor-col-resize hover:bg-blue-500 transition-colors duration-200"
       @mousedown="startResize"
     ></div>
-
     <!-- 聊天侧边栏 -->
     <div 
       class="flex flex-col h-full bg-gray-50 border-l border-gray-200"
       :style="{ width: `${sidebarWidth}px` }"
     >
-      <!-- 聊天历史记录 -->
+      <!-- 聊天侧边栏内容 -->
       <div class="flex-1 overflow-y-auto p-4">
         <div class="space-y-4">
           <!-- 聊天消息示例 -->
@@ -49,7 +53,6 @@
           </div>
         </div>
       </div>
-
       <!-- 示例按钮区域 -->
       <div class="px-4 pb-2">
         <div class="flex flex-wrap gap-2">
@@ -67,7 +70,6 @@
           </button>
         </div>
       </div>
-
       <!-- 输入框 -->
       <div class="p-4 border-t border-gray-200">
         <div class="relative">
@@ -95,6 +97,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import dayjs from 'dayjs'
+import MailDetail from './MailDetail.vue'
 
 const { t } = useI18n()
 
@@ -102,6 +105,8 @@ const emails = ref<any[]>([])
 const loading = ref(true)
 const error = ref('')
 const sidebarWidth = ref(320)
+const showDetail = ref(false)
+const selectedMail = ref<any>(null)
 
 const fetchEmails = async () => {
   loading.value = true
@@ -215,6 +220,23 @@ const sendMessage = () => {
 onUnmounted(() => {
   document.removeEventListener('mousemove', handleMouseMove)
   document.removeEventListener('mouseup', stopResize)
+})
+
+const openMailDetail = (mail: any) => {
+  selectedMail.value = mail
+  showDetail.value = true
+}
+const closeMailDetail = () => {
+  showDetail.value = false
+  selectedMail.value = null
+}
+
+// 需要暴露给模板的变量和方法
+defineExpose({
+  openMailDetail,
+  closeMailDetail,
+  showDetail,
+  selectedMail
 })
 </script>
 

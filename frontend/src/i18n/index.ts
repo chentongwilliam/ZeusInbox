@@ -106,7 +106,11 @@ const en = {
   },
   mail: {
     noMail: 'No emails yet',
-    connectionFailed: 'Email connection failed, please check your settings'
+    connectionFailed: 'Email connection failed, please check your settings',
+    reply: 'Reply',
+    replyAll: 'Reply all',
+    forward: 'Forward',
+    delete: 'Delete'
   },
   chat: {
     examples: {
@@ -225,7 +229,11 @@ const de = {
   },
   mail: {
     noMail: 'Noch keine E-Mails',
-    connectionFailed: 'E-Mail-Verbindung fehlgeschlagen, bitte Einstellungen prüfen'
+    connectionFailed: 'E-Mail-Verbindung fehlgeschlagen, bitte Einstellungen prüfen',
+    reply: 'Antworten',
+    replyAll: 'Allen antworten',
+    forward: 'Weiterleiten',
+    delete: 'Löschen'
   },
   chat: {
     examples: {
@@ -344,7 +352,11 @@ const zh = {
   },
   mail: {
     noMail: '暂无邮件',
-    connectionFailed: '邮箱连接失败，请检查设置'
+    connectionFailed: '邮箱连接失败，请检查设置',
+    reply: '回复',
+    replyAll: '全部回复',
+    forward: '转发',
+    delete: '删除'
   },
   chat: {
     examples: {
