@@ -8,6 +8,7 @@ from pydantic import BaseModel
 from app.services.email_service import EmailService
 from app.models.email_account import EmailAccount
 from app.utils.env_manager import update_email_settings
+import email
 
 router = APIRouter()
 
@@ -165,4 +166,88 @@ async def save_email_settings(settings: EmailSettings):
         )
         return {"status": "success", "message": "Settings updated successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e)) 
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/emails/latest")
+async def get_latest_emails(limit: int = 15, db: Session = Depends(get_db)):
+    """
+    获取最新邮件列表，包含摘要
+    """
+    account = db.query(EmailAccount).first()
+    if not account:
+        print("no account")
+        raise HTTPException(status_code=404, detail="mail.connectionFailed")
+    # 解密密码
+    email_service_tmp = EmailService(account)
+    decrypted_password = email_service_tmp.decrypt_email_data(account.password)
+    # 构造解密后的 account 对象
+    from app.models.email_account import EmailAccount as AccountModel
+    account_data = {
+        "email": account.email,
+        "imap_server": account.imap_server,
+        "imap_port": account.imap_port,
+        "username": account.username,
+        "password": decrypted_password
+    }
+    account_obj = AccountModel(**account_data)
+    # print(f"account_obj: {account_obj.imap_server, account_obj.imap_port, account_obj.username, account_obj.password}")
+    email_service = EmailService(account_obj)
+    try:
+        await email_service.connect()
+        emails = await email_service.get_emails(limit=limit)
+        # 增加摘要字段
+        for mail in emails:
+            try:
+                result, data = await email_service.client.fetch(mail['id'], '(RFC822)')
+                if result == 'OK':
+                    msg = email.message_from_bytes(data[0][1])
+                    snippet = ""
+                    if msg.is_multipart():
+                        for part in msg.walk():
+                            if part.get_content_type() == "text/plain":
+                                snippet = part.get_payload(decode=True).decode(errors='ignore')[:300]
+                                break
+                    else:
+                        snippet = msg.get_payload(decode=True).decode(errors='ignore')[:300]
+                    mail['snippet'] = snippet
+                else:
+                    mail['snippet'] = ""
+            except Exception:
+                mail['snippet'] = ""
+        return emails
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="mail.connectionFailed")
+
+@router.get("/emails/latest-list")
+async def get_latest_email_list(limit: int = 20, db: Session = Depends(get_db)):
+    """
+    获取最新邮件列表，只包含头部信息（主题、发件人、日期）
+    """
+    account = db.query(EmailAccount).first()
+    if not account:
+        raise HTTPException(status_code=404, detail="mail.connectionFailed")
+        
+    # 解密密码
+    email_service_tmp = EmailService(account)
+    decrypted_password = email_service_tmp.decrypt_email_data(account.password)
+    
+    # 构造解密后的 account 对象
+    from app.models.email_account import EmailAccount as AccountModel
+    account_data = {
+        "email": account.email,
+        "imap_server": account.imap_server,
+        "imap_port": account.imap_port,
+        "username": account.username,
+        "password": decrypted_password
+    }
+    account_obj = AccountModel(**account_data)
+    
+    email_service = EmailService(account_obj)
+    try:
+        await email_service.connect()
+        emails = await email_service.get_latest_email_list(limit=limit)
+        return emails
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="mail.connectionFailed")
+    finally:
+        await email_service.disconnect() 

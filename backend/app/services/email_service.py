@@ -32,7 +32,7 @@ class EmailService:
             logger.info(f"Attempting to login with username: {self.account.username}")
             await self.client.login(
                 self.account.username,
-                self.account.password  # 暂时不加密，方便调试
+                self.account.password
             )
             logger.info("Login successful")
             return True, "Login successful"
@@ -56,7 +56,7 @@ class EmailService:
             await self.client.wait_hello_from_server()
             await self.client.login(
                 self.account.username,
-                self.account.password  # 暂时不加密，方便调试
+                self.account.password
             )
         except Exception as e:
             logger.error(f"connection failed: {str(e)}")
@@ -187,4 +187,60 @@ class EmailService:
             return decrypt_data(encrypted_password)
         except Exception as e:
             logger.error(f"Failed to decrypt password: {e}")
-            return "" 
+            return ""
+
+    async def get_latest_email_list(self, folder: str = "INBOX", limit: int = 10) -> List[Dict[str, Any]]:
+        """获取最新的邮件列表，只包含头部信息（主题、发件人、日期）
+        
+        Args:
+            folder: 邮箱文件夹，默认为 INBOX
+            limit: 获取的邮件数量，默认为10封
+            
+        Returns:
+            List[Dict[str, Any]]: 邮件列表，每个邮件包含 id、subject、from、date 信息
+        """
+        if not self.client:
+            await self.connect()
+            
+        try:
+            # 选择邮箱文件夹
+            await self.client.select(folder)
+            
+            # 搜索所有邮件
+            result, data = await self.client.search('ALL')
+            if result != 'OK':
+                raise Exception("Failed to search emails")
+                
+            # 获取邮件ID列表
+            email_ids = data[0].split()
+            # 只取最新的limit封邮件，并反转顺序使最新的邮件在前
+            recent_emails = email_ids[-limit:][::-1]
+            
+            emails = []
+            for email_id in recent_emails:
+                # 将bytes类型的email_id转换为字符串
+                email_id_str = email_id.decode() if isinstance(email_id, bytes) else str(email_id)
+                
+                # 只获取邮件头部信息
+                result, data = await self.client.fetch(email_id_str, '(BODY.PEEK[HEADER.FIELDS (SUBJECT FROM DATE)])')
+                if result == 'OK':
+                    header_data = data[1]  # 获取头部数据
+                    msg = email.message_from_bytes(header_data)
+                    
+                    # 解码并获取邮件信息
+                    subject = self._decode_email_header(msg.get('Subject', ''))
+                    from_addr = self._decode_email_header(msg.get('From', ''))
+                    date = msg.get('Date', '')
+                    
+                    emails.append({
+                        'id': email_id_str,
+                        'subject': subject,
+                        'from': from_addr,
+                        'date': date
+                    })
+            
+            return emails
+            
+        except Exception as e:
+            logger.error(f"Failed to get latest email list: {str(e)}")
+            raise 

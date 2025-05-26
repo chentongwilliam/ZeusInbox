@@ -3770,8 +3770,8 @@
           "instruct_type": null
         },
         "pricing": {
-          "prompt": "0.0000008",
-          "completion": "0.0000008",
+          "prompt": "0.0000009",
+          "completion": "0.0000009",
           "request": "0",
           "image": "0",
           "web_search": "0",
@@ -3779,7 +3779,7 @@
         },
         "top_provider": {
           "context_length": 128000,
-          "max_completion_tokens": 128000,
+          "max_completion_tokens": null,
           "is_moderated": false
         },
         "per_request_limits": null,
@@ -6460,7 +6460,7 @@
         "name": "Mistral: Mistral Small 3",
         "created": 1738255409,
         "description": "Mistral Small 3 is a 24B-parameter language model optimized for low-latency performance across common AI tasks. Released under the Apache 2.0 license, it features both pre-trained and instruction-tuned versions designed for efficient local deployment.\n\nThe model achieves 81% accuracy on the MMLU benchmark and performs competitively with larger models like Llama 3.3 70B and Qwen 32B, while operating at three times the speed on equivalent hardware. [Read the blog post about the model here.](https://mistral.ai/news/mistral-small-3/)",
-        "context_length": 28000,
+        "context_length": 32768,
         "architecture": {
           "modality": "text->text",
           "input_modalities": [
@@ -6473,7 +6473,7 @@
           "instruct_type": null
         },
         "pricing": {
-          "prompt": "0.00000005",
+          "prompt": "0.00000006",
           "completion": "0.00000012",
           "request": "0",
           "image": "0",
@@ -6481,8 +6481,8 @@
           "internal_reasoning": "0"
         },
         "top_provider": {
-          "context_length": 28000,
-          "max_completion_tokens": 14000,
+          "context_length": 32768,
+          "max_completion_tokens": 16384,
           "is_moderated": false
         },
         "per_request_limits": null,
@@ -8646,53 +8646,6 @@
         ]
       },
       {
-        "id": "anthracite-org/magnum-v4-72b",
-        "hugging_face_id": "anthracite-org/magnum-v4-72b",
-        "name": "Magnum v4 72B",
-        "created": 1729555200,
-        "description": "This is a series of models designed to replicate the prose quality of the Claude 3 models, specifically Sonnet(https://openrouter.ai/anthropic/claude-3.5-sonnet) and Opus(https://openrouter.ai/anthropic/claude-3-opus).\n\nThe model is fine-tuned on top of [Qwen2.5 72B](https://openrouter.ai/qwen/qwen-2.5-72b-instruct).",
-        "context_length": 16384,
-        "architecture": {
-          "modality": "text->text",
-          "input_modalities": [
-            "text"
-          ],
-          "output_modalities": [
-            "text"
-          ],
-          "tokenizer": "Qwen",
-          "instruct_type": "chatml"
-        },
-        "pricing": {
-          "prompt": "0.0000025",
-          "completion": "0.000003",
-          "request": "0",
-          "image": "0",
-          "web_search": "0",
-          "internal_reasoning": "0"
-        },
-        "top_provider": {
-          "context_length": 16384,
-          "max_completion_tokens": 1024,
-          "is_moderated": false
-        },
-        "per_request_limits": null,
-        "supported_parameters": [
-          "max_tokens",
-          "temperature",
-          "top_p",
-          "stop",
-          "frequency_penalty",
-          "presence_penalty",
-          "repetition_penalty",
-          "top_k",
-          "min_p",
-          "seed",
-          "logit_bias",
-          "top_a"
-        ]
-      },
-      {
         "id": "neversleep/llama-3.1-lumimaid-70b",
         "hugging_face_id": "NeverSleep/Lumimaid-v0.2-70B",
         "name": "NeverSleep: Lumimaid v0.2 70B",
@@ -8736,6 +8689,53 @@
           "top_k",
           "min_p",
           "seed",
+          "top_a"
+        ]
+      },
+      {
+        "id": "anthracite-org/magnum-v4-72b",
+        "hugging_face_id": "anthracite-org/magnum-v4-72b",
+        "name": "Magnum v4 72B",
+        "created": 1729555200,
+        "description": "This is a series of models designed to replicate the prose quality of the Claude 3 models, specifically Sonnet(https://openrouter.ai/anthropic/claude-3.5-sonnet) and Opus(https://openrouter.ai/anthropic/claude-3-opus).\n\nThe model is fine-tuned on top of [Qwen2.5 72B](https://openrouter.ai/qwen/qwen-2.5-72b-instruct).",
+        "context_length": 16384,
+        "architecture": {
+          "modality": "text->text",
+          "input_modalities": [
+            "text"
+          ],
+          "output_modalities": [
+            "text"
+          ],
+          "tokenizer": "Qwen",
+          "instruct_type": "chatml"
+        },
+        "pricing": {
+          "prompt": "0.0000025",
+          "completion": "0.000003",
+          "request": "0",
+          "image": "0",
+          "web_search": "0",
+          "internal_reasoning": "0"
+        },
+        "top_provider": {
+          "context_length": 16384,
+          "max_completion_tokens": 1024,
+          "is_moderated": false
+        },
+        "per_request_limits": null,
+        "supported_parameters": [
+          "max_tokens",
+          "temperature",
+          "top_p",
+          "stop",
+          "frequency_penalty",
+          "presence_penalty",
+          "repetition_penalty",
+          "top_k",
+          "min_p",
+          "seed",
+          "logit_bias",
           "top_a"
         ]
       },
@@ -9374,6 +9374,95 @@
         ]
       },
       {
+        "id": "meta-llama/llama-3.2-3b-instruct:free",
+        "hugging_face_id": "meta-llama/Llama-3.2-3B-Instruct",
+        "name": "Meta: Llama 3.2 3B Instruct (free)",
+        "created": 1727222400,
+        "description": "Llama 3.2 3B is a 3-billion-parameter multilingual large language model, optimized for advanced natural language processing tasks like dialogue generation, reasoning, and summarization. Designed with the latest transformer architecture, it supports eight languages, including English, Spanish, and Hindi, and is adaptable for additional languages.\n\nTrained on 9 trillion tokens, the Llama 3.2 3B model excels in instruction-following, complex reasoning, and tool use. Its balanced performance makes it ideal for applications needing accuracy and efficiency in text generation across multilingual settings.\n\nClick here for the [original model card](https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/MODEL_CARD.md).\n\nUsage of this model is subject to [Meta's Acceptable Use Policy](https://www.llama.com/llama3/use-policy/).",
+        "context_length": 20000,
+        "architecture": {
+          "modality": "text->text",
+          "input_modalities": [
+            "text"
+          ],
+          "output_modalities": [
+            "text"
+          ],
+          "tokenizer": "Llama3",
+          "instruct_type": "llama3"
+        },
+        "pricing": {
+          "prompt": "0",
+          "completion": "0",
+          "request": "0",
+          "image": "0",
+          "web_search": "0",
+          "internal_reasoning": "0"
+        },
+        "top_provider": {
+          "context_length": 20000,
+          "max_completion_tokens": 20000,
+          "is_moderated": false
+        },
+        "per_request_limits": null,
+        "supported_parameters": [
+          "max_tokens",
+          "temperature",
+          "top_p"
+        ]
+      },
+      {
+        "id": "meta-llama/llama-3.2-3b-instruct",
+        "hugging_face_id": "meta-llama/Llama-3.2-3B-Instruct",
+        "name": "Meta: Llama 3.2 3B Instruct",
+        "created": 1727222400,
+        "description": "Llama 3.2 3B is a 3-billion-parameter multilingual large language model, optimized for advanced natural language processing tasks like dialogue generation, reasoning, and summarization. Designed with the latest transformer architecture, it supports eight languages, including English, Spanish, and Hindi, and is adaptable for additional languages.\n\nTrained on 9 trillion tokens, the Llama 3.2 3B model excels in instruction-following, complex reasoning, and tool use. Its balanced performance makes it ideal for applications needing accuracy and efficiency in text generation across multilingual settings.\n\nClick here for the [original model card](https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/MODEL_CARD.md).\n\nUsage of this model is subject to [Meta's Acceptable Use Policy](https://www.llama.com/llama3/use-policy/).",
+        "context_length": 131072,
+        "architecture": {
+          "modality": "text->text",
+          "input_modalities": [
+            "text"
+          ],
+          "output_modalities": [
+            "text"
+          ],
+          "tokenizer": "Llama3",
+          "instruct_type": "llama3"
+        },
+        "pricing": {
+          "prompt": "0.00000001",
+          "completion": "0.00000002",
+          "request": "0",
+          "image": "0",
+          "web_search": "0",
+          "internal_reasoning": "0"
+        },
+        "top_provider": {
+          "context_length": 131072,
+          "max_completion_tokens": 16384,
+          "is_moderated": false
+        },
+        "per_request_limits": null,
+        "supported_parameters": [
+          "tools",
+          "tool_choice",
+          "max_tokens",
+          "temperature",
+          "top_p",
+          "stop",
+          "frequency_penalty",
+          "presence_penalty",
+          "seed",
+          "logit_bias",
+          "logprobs",
+          "top_logprobs",
+          "response_format",
+          "top_k",
+          "min_p",
+          "repetition_penalty"
+        ]
+      },
+      {
         "id": "meta-llama/llama-3.2-1b-instruct:free",
         "hugging_face_id": "meta-llama/Llama-3.2-1B-Instruct",
         "name": "Meta: Llama 3.2 1B Instruct (free)",
@@ -9612,95 +9701,6 @@
         ]
       },
       {
-        "id": "meta-llama/llama-3.2-3b-instruct:free",
-        "hugging_face_id": "meta-llama/Llama-3.2-3B-Instruct",
-        "name": "Meta: Llama 3.2 3B Instruct (free)",
-        "created": 1727222400,
-        "description": "Llama 3.2 3B is a 3-billion-parameter multilingual large language model, optimized for advanced natural language processing tasks like dialogue generation, reasoning, and summarization. Designed with the latest transformer architecture, it supports eight languages, including English, Spanish, and Hindi, and is adaptable for additional languages.\n\nTrained on 9 trillion tokens, the Llama 3.2 3B model excels in instruction-following, complex reasoning, and tool use. Its balanced performance makes it ideal for applications needing accuracy and efficiency in text generation across multilingual settings.\n\nClick here for the [original model card](https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/MODEL_CARD.md).\n\nUsage of this model is subject to [Meta's Acceptable Use Policy](https://www.llama.com/llama3/use-policy/).",
-        "context_length": 20000,
-        "architecture": {
-          "modality": "text->text",
-          "input_modalities": [
-            "text"
-          ],
-          "output_modalities": [
-            "text"
-          ],
-          "tokenizer": "Llama3",
-          "instruct_type": "llama3"
-        },
-        "pricing": {
-          "prompt": "0",
-          "completion": "0",
-          "request": "0",
-          "image": "0",
-          "web_search": "0",
-          "internal_reasoning": "0"
-        },
-        "top_provider": {
-          "context_length": 20000,
-          "max_completion_tokens": 20000,
-          "is_moderated": false
-        },
-        "per_request_limits": null,
-        "supported_parameters": [
-          "max_tokens",
-          "temperature",
-          "top_p"
-        ]
-      },
-      {
-        "id": "meta-llama/llama-3.2-3b-instruct",
-        "hugging_face_id": "meta-llama/Llama-3.2-3B-Instruct",
-        "name": "Meta: Llama 3.2 3B Instruct",
-        "created": 1727222400,
-        "description": "Llama 3.2 3B is a 3-billion-parameter multilingual large language model, optimized for advanced natural language processing tasks like dialogue generation, reasoning, and summarization. Designed with the latest transformer architecture, it supports eight languages, including English, Spanish, and Hindi, and is adaptable for additional languages.\n\nTrained on 9 trillion tokens, the Llama 3.2 3B model excels in instruction-following, complex reasoning, and tool use. Its balanced performance makes it ideal for applications needing accuracy and efficiency in text generation across multilingual settings.\n\nClick here for the [original model card](https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/MODEL_CARD.md).\n\nUsage of this model is subject to [Meta's Acceptable Use Policy](https://www.llama.com/llama3/use-policy/).",
-        "context_length": 131072,
-        "architecture": {
-          "modality": "text->text",
-          "input_modalities": [
-            "text"
-          ],
-          "output_modalities": [
-            "text"
-          ],
-          "tokenizer": "Llama3",
-          "instruct_type": "llama3"
-        },
-        "pricing": {
-          "prompt": "0.00000001",
-          "completion": "0.00000002",
-          "request": "0",
-          "image": "0",
-          "web_search": "0",
-          "internal_reasoning": "0"
-        },
-        "top_provider": {
-          "context_length": 131072,
-          "max_completion_tokens": 16384,
-          "is_moderated": false
-        },
-        "per_request_limits": null,
-        "supported_parameters": [
-          "tools",
-          "tool_choice",
-          "max_tokens",
-          "temperature",
-          "top_p",
-          "stop",
-          "frequency_penalty",
-          "presence_penalty",
-          "seed",
-          "logit_bias",
-          "logprobs",
-          "top_logprobs",
-          "response_format",
-          "top_k",
-          "min_p",
-          "repetition_penalty"
-        ]
-      },
-      {
         "id": "qwen/qwen-2.5-72b-instruct:free",
         "hugging_face_id": "Qwen/Qwen2.5-72B-Instruct",
         "name": "Qwen2.5 72B Instruct (free)",
@@ -9848,44 +9848,6 @@
         ]
       },
       {
-        "id": "openai/o1-preview-2024-09-12",
-        "hugging_face_id": null,
-        "name": "OpenAI: o1-preview (2024-09-12)",
-        "created": 1726099200,
-        "description": "The latest and strongest model family from OpenAI, o1 is designed to spend more time thinking before responding.\n\nThe o1 models are optimized for math, science, programming, and other STEM-related tasks. They consistently exhibit PhD-level accuracy on benchmarks in physics, chemistry, and biology. Learn more in the [launch announcement](https://openai.com/o1).\n\nNote: This model is currently experimental and not suitable for production use-cases, and may be heavily rate-limited.",
-        "context_length": 128000,
-        "architecture": {
-          "modality": "text->text",
-          "input_modalities": [
-            "text"
-          ],
-          "output_modalities": [
-            "text"
-          ],
-          "tokenizer": "GPT",
-          "instruct_type": null
-        },
-        "pricing": {
-          "prompt": "0.000015",
-          "completion": "0.00006",
-          "request": "0",
-          "image": "0",
-          "web_search": "0",
-          "internal_reasoning": "0",
-          "input_cache_read": "0.0000075"
-        },
-        "top_provider": {
-          "context_length": 128000,
-          "max_completion_tokens": 32768,
-          "is_moderated": true
-        },
-        "per_request_limits": null,
-        "supported_parameters": [
-          "seed",
-          "max_tokens"
-        ]
-      },
-      {
         "id": "openai/o1-preview",
         "hugging_face_id": null,
         "name": "OpenAI: o1-preview",
@@ -9924,9 +9886,47 @@
         ]
       },
       {
-        "id": "openai/o1-mini-2024-09-12",
+        "id": "openai/o1-preview-2024-09-12",
         "hugging_face_id": null,
-        "name": "OpenAI: o1-mini (2024-09-12)",
+        "name": "OpenAI: o1-preview (2024-09-12)",
+        "created": 1726099200,
+        "description": "The latest and strongest model family from OpenAI, o1 is designed to spend more time thinking before responding.\n\nThe o1 models are optimized for math, science, programming, and other STEM-related tasks. They consistently exhibit PhD-level accuracy on benchmarks in physics, chemistry, and biology. Learn more in the [launch announcement](https://openai.com/o1).\n\nNote: This model is currently experimental and not suitable for production use-cases, and may be heavily rate-limited.",
+        "context_length": 128000,
+        "architecture": {
+          "modality": "text->text",
+          "input_modalities": [
+            "text"
+          ],
+          "output_modalities": [
+            "text"
+          ],
+          "tokenizer": "GPT",
+          "instruct_type": null
+        },
+        "pricing": {
+          "prompt": "0.000015",
+          "completion": "0.00006",
+          "request": "0",
+          "image": "0",
+          "web_search": "0",
+          "internal_reasoning": "0",
+          "input_cache_read": "0.0000075"
+        },
+        "top_provider": {
+          "context_length": 128000,
+          "max_completion_tokens": 32768,
+          "is_moderated": true
+        },
+        "per_request_limits": null,
+        "supported_parameters": [
+          "seed",
+          "max_tokens"
+        ]
+      },
+      {
+        "id": "openai/o1-mini",
+        "hugging_face_id": null,
+        "name": "OpenAI: o1-mini",
         "created": 1726099200,
         "description": "The latest and strongest model family from OpenAI, o1 is designed to spend more time thinking before responding.\n\nThe o1 models are optimized for math, science, programming, and other STEM-related tasks. They consistently exhibit PhD-level accuracy on benchmarks in physics, chemistry, and biology. Learn more in the [launch announcement](https://openai.com/o1).\n\nNote: This model is currently experimental and not suitable for production use-cases, and may be heavily rate-limited.",
         "context_length": 128000,
@@ -9962,9 +9962,9 @@
         ]
       },
       {
-        "id": "openai/o1-mini",
+        "id": "openai/o1-mini-2024-09-12",
         "hugging_face_id": null,
-        "name": "OpenAI: o1-mini",
+        "name": "OpenAI: o1-mini (2024-09-12)",
         "created": 1726099200,
         "description": "The latest and strongest model family from OpenAI, o1 is designed to spend more time thinking before responding.\n\nThe o1 models are optimized for math, science, programming, and other STEM-related tasks. They consistently exhibit PhD-level accuracy on benchmarks in physics, chemistry, and biology. Learn more in the [launch announcement](https://openai.com/o1).\n\nNote: This model is currently experimental and not suitable for production use-cases, and may be heavily rate-limited.",
         "context_length": 128000,
@@ -10486,51 +10486,6 @@
         ]
       },
       {
-        "id": "aetherwiing/mn-starcannon-12b",
-        "hugging_face_id": "aetherwiing/MN-12B-Starcannon-v2",
-        "name": "Aetherwiing: Starcannon 12B",
-        "created": 1723507200,
-        "description": "Starcannon 12B v2 is a creative roleplay and story writing model, based on Mistral Nemo, using [nothingiisreal/mn-celeste-12b](/nothingiisreal/mn-celeste-12b) as a base, with [intervitens/mini-magnum-12b-v1.1](https://huggingface.co/intervitens/mini-magnum-12b-v1.1) merged in using the [TIES](https://arxiv.org/abs/2306.01708) method.\n\nAlthough more similar to Magnum overall, the model remains very creative, with a pleasant writing style. It is recommended for people wanting more variety than Magnum, and yet more verbose prose than Celeste.",
-        "context_length": 16384,
-        "architecture": {
-          "modality": "text->text",
-          "input_modalities": [
-            "text"
-          ],
-          "output_modalities": [
-            "text"
-          ],
-          "tokenizer": "Mistral",
-          "instruct_type": "chatml"
-        },
-        "pricing": {
-          "prompt": "0.0000008",
-          "completion": "0.0000012",
-          "request": "0",
-          "image": "0",
-          "web_search": "0",
-          "internal_reasoning": "0"
-        },
-        "top_provider": {
-          "context_length": 16384,
-          "max_completion_tokens": 4096,
-          "is_moderated": false
-        },
-        "per_request_limits": null,
-        "supported_parameters": [
-          "max_tokens",
-          "temperature",
-          "top_p",
-          "stop",
-          "frequency_penalty",
-          "presence_penalty",
-          "repetition_penalty",
-          "top_k",
-          "min_p",
-          "seed"
-        ]
-      },
-      {
         "id": "sao10k/l3-lunaris-8b",
         "hugging_face_id": "Sao10K/L3-8B-Lunaris-v1",
         "name": "Sao10K: Llama 3 8B Lunaris",
@@ -10575,6 +10530,51 @@
           "repetition_penalty",
           "logit_bias",
           "response_format"
+        ]
+      },
+      {
+        "id": "aetherwiing/mn-starcannon-12b",
+        "hugging_face_id": "aetherwiing/MN-12B-Starcannon-v2",
+        "name": "Aetherwiing: Starcannon 12B",
+        "created": 1723507200,
+        "description": "Starcannon 12B v2 is a creative roleplay and story writing model, based on Mistral Nemo, using [nothingiisreal/mn-celeste-12b](/nothingiisreal/mn-celeste-12b) as a base, with [intervitens/mini-magnum-12b-v1.1](https://huggingface.co/intervitens/mini-magnum-12b-v1.1) merged in using the [TIES](https://arxiv.org/abs/2306.01708) method.\n\nAlthough more similar to Magnum overall, the model remains very creative, with a pleasant writing style. It is recommended for people wanting more variety than Magnum, and yet more verbose prose than Celeste.",
+        "context_length": 16384,
+        "architecture": {
+          "modality": "text->text",
+          "input_modalities": [
+            "text"
+          ],
+          "output_modalities": [
+            "text"
+          ],
+          "tokenizer": "Mistral",
+          "instruct_type": "chatml"
+        },
+        "pricing": {
+          "prompt": "0.0000008",
+          "completion": "0.0000012",
+          "request": "0",
+          "image": "0",
+          "web_search": "0",
+          "internal_reasoning": "0"
+        },
+        "top_provider": {
+          "context_length": 16384,
+          "max_completion_tokens": 4096,
+          "is_moderated": false
+        },
+        "per_request_limits": null,
+        "supported_parameters": [
+          "max_tokens",
+          "temperature",
+          "top_p",
+          "stop",
+          "frequency_penalty",
+          "presence_penalty",
+          "repetition_penalty",
+          "top_k",
+          "min_p",
+          "seed"
         ]
       },
       {
@@ -10628,51 +10628,6 @@
           "top_logprobs",
           "response_format",
           "structured_outputs"
-        ]
-      },
-      {
-        "id": "nothingiisreal/mn-celeste-12b",
-        "hugging_face_id": "nothingiisreal/MN-12B-Celeste-V1.9",
-        "name": "Mistral Nemo 12B Celeste",
-        "created": 1722556800,
-        "description": "A specialized story writing and roleplaying model based on Mistral's NeMo 12B Instruct. Fine-tuned on curated datasets including Reddit Writing Prompts and Opus Instruct 25K.\n\nThis model excels at creative writing, offering improved NSFW capabilities, with smarter and more active narration. It demonstrates remarkable versatility in both SFW and NSFW scenarios, with strong Out of Character (OOC) steering capabilities, allowing fine-tuned control over narrative direction and character behavior.\n\nCheck out the model's [HuggingFace page](https://huggingface.co/nothingiisreal/MN-12B-Celeste-V1.9) for details on what parameters and prompts work best!",
-        "context_length": 16384,
-        "architecture": {
-          "modality": "text->text",
-          "input_modalities": [
-            "text"
-          ],
-          "output_modalities": [
-            "text"
-          ],
-          "tokenizer": "Mistral",
-          "instruct_type": "chatml"
-        },
-        "pricing": {
-          "prompt": "0.0000008",
-          "completion": "0.0000012",
-          "request": "0",
-          "image": "0",
-          "web_search": "0",
-          "internal_reasoning": "0"
-        },
-        "top_provider": {
-          "context_length": 16384,
-          "max_completion_tokens": 4096,
-          "is_moderated": false
-        },
-        "per_request_limits": null,
-        "supported_parameters": [
-          "max_tokens",
-          "temperature",
-          "top_p",
-          "stop",
-          "frequency_penalty",
-          "presence_penalty",
-          "repetition_penalty",
-          "top_k",
-          "min_p",
-          "seed"
         ]
       },
       {
@@ -10772,6 +10727,51 @@
         ]
       },
       {
+        "id": "nothingiisreal/mn-celeste-12b",
+        "hugging_face_id": "nothingiisreal/MN-12B-Celeste-V1.9",
+        "name": "Mistral Nemo 12B Celeste",
+        "created": 1722556800,
+        "description": "A specialized story writing and roleplaying model based on Mistral's NeMo 12B Instruct. Fine-tuned on curated datasets including Reddit Writing Prompts and Opus Instruct 25K.\n\nThis model excels at creative writing, offering improved NSFW capabilities, with smarter and more active narration. It demonstrates remarkable versatility in both SFW and NSFW scenarios, with strong Out of Character (OOC) steering capabilities, allowing fine-tuned control over narrative direction and character behavior.\n\nCheck out the model's [HuggingFace page](https://huggingface.co/nothingiisreal/MN-12B-Celeste-V1.9) for details on what parameters and prompts work best!",
+        "context_length": 16384,
+        "architecture": {
+          "modality": "text->text",
+          "input_modalities": [
+            "text"
+          ],
+          "output_modalities": [
+            "text"
+          ],
+          "tokenizer": "Mistral",
+          "instruct_type": "chatml"
+        },
+        "pricing": {
+          "prompt": "0.0000008",
+          "completion": "0.0000012",
+          "request": "0",
+          "image": "0",
+          "web_search": "0",
+          "internal_reasoning": "0"
+        },
+        "top_provider": {
+          "context_length": 16384,
+          "max_completion_tokens": 4096,
+          "is_moderated": false
+        },
+        "per_request_limits": null,
+        "supported_parameters": [
+          "max_tokens",
+          "temperature",
+          "top_p",
+          "stop",
+          "frequency_penalty",
+          "presence_penalty",
+          "repetition_penalty",
+          "top_k",
+          "min_p",
+          "seed"
+        ]
+      },
+      {
         "id": "perplexity/llama-3.1-sonar-small-128k-online",
         "hugging_face_id": null,
         "name": "Perplexity: Llama 3.1 Sonar 8B Online",
@@ -10851,58 +10851,6 @@
           "top_k",
           "frequency_penalty",
           "presence_penalty"
-        ]
-      },
-      {
-        "id": "meta-llama/llama-3.1-70b-instruct",
-        "hugging_face_id": "meta-llama/Meta-Llama-3.1-70B-Instruct",
-        "name": "Meta: Llama 3.1 70B Instruct",
-        "created": 1721692800,
-        "description": "Meta's latest class of model (Llama 3.1) launched with a variety of sizes & flavors. This 70B instruct-tuned version is optimized for high quality dialogue usecases.\n\nIt has demonstrated strong performance compared to leading closed-source models in human evaluations.\n\nTo read more about the model release, [click here](https://ai.meta.com/blog/meta-llama-3-1/). Usage of this model is subject to [Meta's Acceptable Use Policy](https://llama.meta.com/llama3/use-policy/).",
-        "context_length": 131072,
-        "architecture": {
-          "modality": "text->text",
-          "input_modalities": [
-            "text"
-          ],
-          "output_modalities": [
-            "text"
-          ],
-          "tokenizer": "Llama3",
-          "instruct_type": "llama3"
-        },
-        "pricing": {
-          "prompt": "0.0000001",
-          "completion": "0.00000028",
-          "request": "0",
-          "image": "0",
-          "web_search": "0",
-          "internal_reasoning": "0"
-        },
-        "top_provider": {
-          "context_length": 131072,
-          "max_completion_tokens": 16384,
-          "is_moderated": false
-        },
-        "per_request_limits": null,
-        "supported_parameters": [
-          "tools",
-          "tool_choice",
-          "max_tokens",
-          "temperature",
-          "top_p",
-          "stop",
-          "frequency_penalty",
-          "presence_penalty",
-          "top_k",
-          "repetition_penalty",
-          "logit_bias",
-          "min_p",
-          "response_format",
-          "seed",
-          "logprobs",
-          "top_logprobs",
-          "structured_outputs"
         ]
       },
       {
@@ -11052,6 +11000,103 @@
         ]
       },
       {
+        "id": "meta-llama/llama-3.1-70b-instruct",
+        "hugging_face_id": "meta-llama/Meta-Llama-3.1-70B-Instruct",
+        "name": "Meta: Llama 3.1 70B Instruct",
+        "created": 1721692800,
+        "description": "Meta's latest class of model (Llama 3.1) launched with a variety of sizes & flavors. This 70B instruct-tuned version is optimized for high quality dialogue usecases.\n\nIt has demonstrated strong performance compared to leading closed-source models in human evaluations.\n\nTo read more about the model release, [click here](https://ai.meta.com/blog/meta-llama-3-1/). Usage of this model is subject to [Meta's Acceptable Use Policy](https://llama.meta.com/llama3/use-policy/).",
+        "context_length": 131072,
+        "architecture": {
+          "modality": "text->text",
+          "input_modalities": [
+            "text"
+          ],
+          "output_modalities": [
+            "text"
+          ],
+          "tokenizer": "Llama3",
+          "instruct_type": "llama3"
+        },
+        "pricing": {
+          "prompt": "0.0000001",
+          "completion": "0.00000028",
+          "request": "0",
+          "image": "0",
+          "web_search": "0",
+          "internal_reasoning": "0"
+        },
+        "top_provider": {
+          "context_length": 131072,
+          "max_completion_tokens": 16384,
+          "is_moderated": false
+        },
+        "per_request_limits": null,
+        "supported_parameters": [
+          "tools",
+          "tool_choice",
+          "max_tokens",
+          "temperature",
+          "top_p",
+          "stop",
+          "frequency_penalty",
+          "presence_penalty",
+          "top_k",
+          "repetition_penalty",
+          "logit_bias",
+          "min_p",
+          "response_format",
+          "seed",
+          "logprobs",
+          "top_logprobs",
+          "structured_outputs"
+        ]
+      },
+      {
+        "id": "mistralai/codestral-mamba",
+        "hugging_face_id": "mistralai/mamba-codestral-7B-v0.1",
+        "name": "Mistral: Codestral Mamba",
+        "created": 1721347200,
+        "description": "A 7.3B parameter Mamba-based model designed for code and reasoning tasks.\n\n- Linear time inference, allowing for theoretically infinite sequence lengths\n- 256k token context window\n- Optimized for quick responses, especially beneficial for code productivity\n- Performs comparably to state-of-the-art transformer models in code and reasoning tasks\n- Available under the Apache 2.0 license for free use, modification, and distribution",
+        "context_length": 262144,
+        "architecture": {
+          "modality": "text->text",
+          "input_modalities": [
+            "text"
+          ],
+          "output_modalities": [
+            "text"
+          ],
+          "tokenizer": "Mistral",
+          "instruct_type": null
+        },
+        "pricing": {
+          "prompt": "0.00000025",
+          "completion": "0.00000025",
+          "request": "0",
+          "image": "0",
+          "web_search": "0",
+          "internal_reasoning": "0"
+        },
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": null,
+          "is_moderated": false
+        },
+        "per_request_limits": null,
+        "supported_parameters": [
+          "tools",
+          "tool_choice",
+          "max_tokens",
+          "temperature",
+          "top_p",
+          "stop",
+          "frequency_penalty",
+          "presence_penalty",
+          "response_format",
+          "seed"
+        ]
+      },
+      {
         "id": "mistralai/mistral-nemo:free",
         "hugging_face_id": "mistralai/Mistral-Nemo-Instruct-2407",
         "name": "Mistral: Mistral Nemo (free)",
@@ -11149,51 +11194,6 @@
           "structured_outputs",
           "repetition_penalty",
           "min_p"
-        ]
-      },
-      {
-        "id": "mistralai/codestral-mamba",
-        "hugging_face_id": "mistralai/mamba-codestral-7B-v0.1",
-        "name": "Mistral: Codestral Mamba",
-        "created": 1721347200,
-        "description": "A 7.3B parameter Mamba-based model designed for code and reasoning tasks.\n\n- Linear time inference, allowing for theoretically infinite sequence lengths\n- 256k token context window\n- Optimized for quick responses, especially beneficial for code productivity\n- Performs comparably to state-of-the-art transformer models in code and reasoning tasks\n- Available under the Apache 2.0 license for free use, modification, and distribution",
-        "context_length": 262144,
-        "architecture": {
-          "modality": "text->text",
-          "input_modalities": [
-            "text"
-          ],
-          "output_modalities": [
-            "text"
-          ],
-          "tokenizer": "Mistral",
-          "instruct_type": null
-        },
-        "pricing": {
-          "prompt": "0.00000025",
-          "completion": "0.00000025",
-          "request": "0",
-          "image": "0",
-          "web_search": "0",
-          "internal_reasoning": "0"
-        },
-        "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": null,
-          "is_moderated": false
-        },
-        "per_request_limits": null,
-        "supported_parameters": [
-          "tools",
-          "tool_choice",
-          "max_tokens",
-          "temperature",
-          "top_p",
-          "stop",
-          "frequency_penalty",
-          "presence_penalty",
-          "response_format",
-          "seed"
         ]
       },
       {
@@ -11770,55 +11770,6 @@
         ]
       },
       {
-        "id": "nousresearch/hermes-2-pro-llama-3-8b",
-        "hugging_face_id": "NousResearch/Hermes-2-Pro-Llama-3-8B",
-        "name": "NousResearch: Hermes 2 Pro - Llama-3 8B",
-        "created": 1716768000,
-        "description": "Hermes 2 Pro is an upgraded, retrained version of Nous Hermes 2, consisting of an updated and cleaned version of the OpenHermes 2.5 Dataset, as well as a newly introduced Function Calling and JSON Mode dataset developed in-house.",
-        "context_length": 131072,
-        "architecture": {
-          "modality": "text->text",
-          "input_modalities": [
-            "text"
-          ],
-          "output_modalities": [
-            "text"
-          ],
-          "tokenizer": "Llama3",
-          "instruct_type": "chatml"
-        },
-        "pricing": {
-          "prompt": "0.000000025",
-          "completion": "0.00000004",
-          "request": "0",
-          "image": "0",
-          "web_search": "0",
-          "internal_reasoning": "0"
-        },
-        "top_provider": {
-          "context_length": 131072,
-          "max_completion_tokens": 131072,
-          "is_moderated": false
-        },
-        "per_request_limits": null,
-        "supported_parameters": [
-          "max_tokens",
-          "temperature",
-          "top_p",
-          "stop",
-          "frequency_penalty",
-          "presence_penalty",
-          "seed",
-          "logit_bias",
-          "logprobs",
-          "top_logprobs",
-          "response_format",
-          "top_k",
-          "min_p",
-          "repetition_penalty"
-        ]
-      },
-      {
         "id": "mistralai/mistral-7b-instruct:free",
         "hugging_face_id": "mistralai/Mistral-7B-Instruct-v0.3",
         "name": "Mistral: Mistral 7B Instruct (free)",
@@ -11915,6 +11866,55 @@
           "tools",
           "tool_choice",
           "structured_outputs"
+        ]
+      },
+      {
+        "id": "nousresearch/hermes-2-pro-llama-3-8b",
+        "hugging_face_id": "NousResearch/Hermes-2-Pro-Llama-3-8B",
+        "name": "NousResearch: Hermes 2 Pro - Llama-3 8B",
+        "created": 1716768000,
+        "description": "Hermes 2 Pro is an upgraded, retrained version of Nous Hermes 2, consisting of an updated and cleaned version of the OpenHermes 2.5 Dataset, as well as a newly introduced Function Calling and JSON Mode dataset developed in-house.",
+        "context_length": 131072,
+        "architecture": {
+          "modality": "text->text",
+          "input_modalities": [
+            "text"
+          ],
+          "output_modalities": [
+            "text"
+          ],
+          "tokenizer": "Llama3",
+          "instruct_type": "chatml"
+        },
+        "pricing": {
+          "prompt": "0.000000025",
+          "completion": "0.00000004",
+          "request": "0",
+          "image": "0",
+          "web_search": "0",
+          "internal_reasoning": "0"
+        },
+        "top_provider": {
+          "context_length": 131072,
+          "max_completion_tokens": 131072,
+          "is_moderated": false
+        },
+        "per_request_limits": null,
+        "supported_parameters": [
+          "max_tokens",
+          "temperature",
+          "top_p",
+          "stop",
+          "frequency_penalty",
+          "presence_penalty",
+          "seed",
+          "logit_bias",
+          "logprobs",
+          "top_logprobs",
+          "response_format",
+          "top_k",
+          "min_p",
+          "repetition_penalty"
         ]
       },
       {
@@ -12197,58 +12197,6 @@
         ]
       },
       {
-        "id": "openai/gpt-4o-2024-05-13",
-        "hugging_face_id": null,
-        "name": "OpenAI: GPT-4o (2024-05-13)",
-        "created": 1715558400,
-        "description": "GPT-4o (\"o\" for \"omni\") is OpenAI's latest AI model, supporting both text and image inputs with text outputs. It maintains the intelligence level of [GPT-4 Turbo](/models/openai/gpt-4-turbo) while being twice as fast and 50% more cost-effective. GPT-4o also offers improved performance in processing non-English languages and enhanced visual capabilities.\n\nFor benchmarking against other models, it was briefly called [\"im-also-a-good-gpt2-chatbot\"](https://twitter.com/LiamFedus/status/1790064963966370209)\n\n#multimodal",
-        "context_length": 128000,
-        "architecture": {
-          "modality": "text+image->text",
-          "input_modalities": [
-            "text",
-            "image",
-            "file"
-          ],
-          "output_modalities": [
-            "text"
-          ],
-          "tokenizer": "GPT",
-          "instruct_type": null
-        },
-        "pricing": {
-          "prompt": "0.000005",
-          "completion": "0.000015",
-          "request": "0",
-          "image": "0.007225",
-          "web_search": "0",
-          "internal_reasoning": "0"
-        },
-        "top_provider": {
-          "context_length": 128000,
-          "max_completion_tokens": 4096,
-          "is_moderated": true
-        },
-        "per_request_limits": null,
-        "supported_parameters": [
-          "tools",
-          "tool_choice",
-          "max_tokens",
-          "temperature",
-          "top_p",
-          "stop",
-          "frequency_penalty",
-          "presence_penalty",
-          "web_search_options",
-          "seed",
-          "logit_bias",
-          "logprobs",
-          "top_logprobs",
-          "response_format",
-          "structured_outputs"
-        ]
-      },
-      {
         "id": "openai/gpt-4o",
         "hugging_face_id": null,
         "name": "OpenAI: GPT-4o",
@@ -12400,6 +12348,58 @@
         ]
       },
       {
+        "id": "openai/gpt-4o-2024-05-13",
+        "hugging_face_id": null,
+        "name": "OpenAI: GPT-4o (2024-05-13)",
+        "created": 1715558400,
+        "description": "GPT-4o (\"o\" for \"omni\") is OpenAI's latest AI model, supporting both text and image inputs with text outputs. It maintains the intelligence level of [GPT-4 Turbo](/models/openai/gpt-4-turbo) while being twice as fast and 50% more cost-effective. GPT-4o also offers improved performance in processing non-English languages and enhanced visual capabilities.\n\nFor benchmarking against other models, it was briefly called [\"im-also-a-good-gpt2-chatbot\"](https://twitter.com/LiamFedus/status/1790064963966370209)\n\n#multimodal",
+        "context_length": 128000,
+        "architecture": {
+          "modality": "text+image->text",
+          "input_modalities": [
+            "text",
+            "image",
+            "file"
+          ],
+          "output_modalities": [
+            "text"
+          ],
+          "tokenizer": "GPT",
+          "instruct_type": null
+        },
+        "pricing": {
+          "prompt": "0.000005",
+          "completion": "0.000015",
+          "request": "0",
+          "image": "0.007225",
+          "web_search": "0",
+          "internal_reasoning": "0"
+        },
+        "top_provider": {
+          "context_length": 128000,
+          "max_completion_tokens": 4096,
+          "is_moderated": true
+        },
+        "per_request_limits": null,
+        "supported_parameters": [
+          "tools",
+          "tool_choice",
+          "max_tokens",
+          "temperature",
+          "top_p",
+          "stop",
+          "frequency_penalty",
+          "presence_penalty",
+          "web_search_options",
+          "seed",
+          "logit_bias",
+          "logprobs",
+          "top_logprobs",
+          "response_format",
+          "structured_outputs"
+        ]
+      },
+      {
         "id": "allenai/olmo-7b-instruct",
         "hugging_face_id": "allenai/OLMo-7B-Instruct",
         "name": "OLMo 7B Instruct",
@@ -12443,53 +12443,6 @@
           "logit_bias",
           "logprobs",
           "top_logprobs"
-        ]
-      },
-      {
-        "id": "neversleep/llama-3-lumimaid-8b:extended",
-        "hugging_face_id": "NeverSleep/Llama-3-Lumimaid-8B-v0.1",
-        "name": "NeverSleep: Llama 3 Lumimaid 8B (extended)",
-        "created": 1714780800,
-        "description": "The NeverSleep team is back, with a Llama 3 8B finetune trained on their curated roleplay data. Striking a balance between eRP and RP, Lumimaid was designed to be serious, yet uncensored when necessary.\n\nTo enhance it's overall intelligence and chat capability, roughly 40% of the training data was not roleplay. This provides a breadth of knowledge to access, while still keeping roleplay as the primary strength.\n\nUsage of this model is subject to [Meta's Acceptable Use Policy](https://llama.meta.com/llama3/use-policy/).",
-        "context_length": 24576,
-        "architecture": {
-          "modality": "text->text",
-          "input_modalities": [
-            "text"
-          ],
-          "output_modalities": [
-            "text"
-          ],
-          "tokenizer": "Llama3",
-          "instruct_type": "llama3"
-        },
-        "pricing": {
-          "prompt": "0.0000002",
-          "completion": "0.00000125",
-          "request": "0",
-          "image": "0",
-          "web_search": "0",
-          "internal_reasoning": "0"
-        },
-        "top_provider": {
-          "context_length": 24576,
-          "max_completion_tokens": 2048,
-          "is_moderated": false
-        },
-        "per_request_limits": null,
-        "supported_parameters": [
-          "max_tokens",
-          "temperature",
-          "top_p",
-          "stop",
-          "frequency_penalty",
-          "presence_penalty",
-          "repetition_penalty",
-          "logit_bias",
-          "top_k",
-          "min_p",
-          "seed",
-          "top_a"
         ]
       },
       {
@@ -12786,6 +12739,53 @@
         ]
       },
       {
+        "id": "google/gemini-pro-1.5",
+        "hugging_face_id": null,
+        "name": "Google: Gemini 1.5 Pro",
+        "created": 1712620800,
+        "description": "Google's latest multimodal model, supports image and video[0] in text or chat prompts.\n\nOptimized for language tasks including:\n\n- Code generation\n- Text generation\n- Text editing\n- Problem solving\n- Recommendations\n- Information extraction\n- Data extraction or generation\n- AI agents\n\nUsage of Gemini is subject to Google's [Gemini Terms of Use](https://ai.google.dev/terms).\n\n* [0]: Video input is not available through OpenRouter at this time.",
+        "context_length": 2000000,
+        "architecture": {
+          "modality": "text+image->text",
+          "input_modalities": [
+            "text",
+            "image"
+          ],
+          "output_modalities": [
+            "text"
+          ],
+          "tokenizer": "Gemini",
+          "instruct_type": null
+        },
+        "pricing": {
+          "prompt": "0.00000125",
+          "completion": "0.000005",
+          "request": "0",
+          "image": "0.0006575",
+          "web_search": "0",
+          "internal_reasoning": "0"
+        },
+        "top_provider": {
+          "context_length": 2000000,
+          "max_completion_tokens": 8192,
+          "is_moderated": false
+        },
+        "per_request_limits": null,
+        "supported_parameters": [
+          "max_tokens",
+          "temperature",
+          "top_p",
+          "stop",
+          "frequency_penalty",
+          "presence_penalty",
+          "tools",
+          "tool_choice",
+          "seed",
+          "response_format",
+          "structured_outputs"
+        ]
+      },
+      {
         "id": "openai/gpt-4-turbo",
         "hugging_face_id": null,
         "name": "OpenAI: GPT-4 Turbo",
@@ -12832,53 +12832,6 @@
           "logprobs",
           "top_logprobs",
           "response_format"
-        ]
-      },
-      {
-        "id": "google/gemini-pro-1.5",
-        "hugging_face_id": null,
-        "name": "Google: Gemini 1.5 Pro",
-        "created": 1712620800,
-        "description": "Google's latest multimodal model, supports image and video[0] in text or chat prompts.\n\nOptimized for language tasks including:\n\n- Code generation\n- Text generation\n- Text editing\n- Problem solving\n- Recommendations\n- Information extraction\n- Data extraction or generation\n- AI agents\n\nUsage of Gemini is subject to Google's [Gemini Terms of Use](https://ai.google.dev/terms).\n\n* [0]: Video input is not available through OpenRouter at this time.",
-        "context_length": 2000000,
-        "architecture": {
-          "modality": "text+image->text",
-          "input_modalities": [
-            "text",
-            "image"
-          ],
-          "output_modalities": [
-            "text"
-          ],
-          "tokenizer": "Gemini",
-          "instruct_type": null
-        },
-        "pricing": {
-          "prompt": "0.00000125",
-          "completion": "0.000005",
-          "request": "0",
-          "image": "0.0006575",
-          "web_search": "0",
-          "internal_reasoning": "0"
-        },
-        "top_provider": {
-          "context_length": 2000000,
-          "max_completion_tokens": 8192,
-          "is_moderated": false
-        },
-        "per_request_limits": null,
-        "supported_parameters": [
-          "max_tokens",
-          "temperature",
-          "top_p",
-          "stop",
-          "frequency_penalty",
-          "presence_penalty",
-          "tools",
-          "tool_choice",
-          "seed",
-          "response_format",
-          "structured_outputs"
         ]
       },
       {
@@ -13617,52 +13570,6 @@
         ]
       },
       {
-        "id": "mistralai/mistral-tiny",
-        "hugging_face_id": null,
-        "name": "Mistral Tiny",
-        "created": 1704844800,
-        "description": "Note: This model is being deprecated. Recommended replacement is the newer [Ministral 8B](/mistral/ministral-8b)\n\nThis model is currently powered by Mistral-7B-v0.2, and incorporates a \"better\" fine-tuning than [Mistral 7B](/models/mistralai/mistral-7b-instruct-v0.1), inspired by community work. It's best used for large batch processing tasks where cost is a significant factor but reasoning capabilities are not crucial.",
-        "context_length": 32768,
-        "architecture": {
-          "modality": "text->text",
-          "input_modalities": [
-            "text"
-          ],
-          "output_modalities": [
-            "text"
-          ],
-          "tokenizer": "Mistral",
-          "instruct_type": null
-        },
-        "pricing": {
-          "prompt": "0.00000025",
-          "completion": "0.00000025",
-          "request": "0",
-          "image": "0",
-          "web_search": "0",
-          "internal_reasoning": "0"
-        },
-        "top_provider": {
-          "context_length": 32768,
-          "max_completion_tokens": null,
-          "is_moderated": false
-        },
-        "per_request_limits": null,
-        "supported_parameters": [
-          "tools",
-          "tool_choice",
-          "max_tokens",
-          "temperature",
-          "top_p",
-          "stop",
-          "frequency_penalty",
-          "presence_penalty",
-          "response_format",
-          "structured_outputs",
-          "seed"
-        ]
-      },
-      {
         "id": "mistralai/mistral-medium",
         "hugging_face_id": null,
         "name": "Mistral Medium",
@@ -13729,6 +13636,52 @@
         "pricing": {
           "prompt": "0.0000002",
           "completion": "0.0000006",
+          "request": "0",
+          "image": "0",
+          "web_search": "0",
+          "internal_reasoning": "0"
+        },
+        "top_provider": {
+          "context_length": 32768,
+          "max_completion_tokens": null,
+          "is_moderated": false
+        },
+        "per_request_limits": null,
+        "supported_parameters": [
+          "tools",
+          "tool_choice",
+          "max_tokens",
+          "temperature",
+          "top_p",
+          "stop",
+          "frequency_penalty",
+          "presence_penalty",
+          "response_format",
+          "structured_outputs",
+          "seed"
+        ]
+      },
+      {
+        "id": "mistralai/mistral-tiny",
+        "hugging_face_id": null,
+        "name": "Mistral Tiny",
+        "created": 1704844800,
+        "description": "Note: This model is being deprecated. Recommended replacement is the newer [Ministral 8B](/mistral/ministral-8b)\n\nThis model is currently powered by Mistral-7B-v0.2, and incorporates a \"better\" fine-tuning than [Mistral 7B](/models/mistralai/mistral-7b-instruct-v0.1), inspired by community work. It's best used for large batch processing tasks where cost is a significant factor but reasoning capabilities are not crucial.",
+        "context_length": 32768,
+        "architecture": {
+          "modality": "text->text",
+          "input_modalities": [
+            "text"
+          ],
+          "output_modalities": [
+            "text"
+          ],
+          "tokenizer": "Mistral",
+          "instruct_type": null
+        },
+        "pricing": {
+          "prompt": "0.00000025",
+          "completion": "0.00000025",
           "request": "0",
           "image": "0",
           "web_search": "0",
@@ -14059,6 +14012,51 @@
         ]
       },
       {
+        "id": "undi95/toppy-m-7b",
+        "hugging_face_id": "Undi95/Toppy-M-7B",
+        "name": "Toppy M 7B",
+        "created": 1699574400,
+        "description": "A wild 7B parameter model that merges several models using the new task_arithmetic merge method from mergekit.\nList of merged models:\n- NousResearch/Nous-Capybara-7B-V1.9\n- [HuggingFaceH4/zephyr-7b-beta](/models/huggingfaceh4/zephyr-7b-beta)\n- lemonilia/AshhLimaRP-Mistral-7B\n- Vulkane/120-Days-of-Sodom-LoRA-Mistral-7b\n- Undi95/Mistral-pippa-sharegpt-7b-qlora\n\n#merge #uncensored",
+        "context_length": 4096,
+        "architecture": {
+          "modality": "text->text",
+          "input_modalities": [
+            "text"
+          ],
+          "output_modalities": [
+            "text"
+          ],
+          "tokenizer": "Mistral",
+          "instruct_type": "alpaca"
+        },
+        "pricing": {
+          "prompt": "0.0000008",
+          "completion": "0.0000012",
+          "request": "0",
+          "image": "0",
+          "web_search": "0",
+          "internal_reasoning": "0"
+        },
+        "top_provider": {
+          "context_length": 4096,
+          "max_completion_tokens": 4096,
+          "is_moderated": false
+        },
+        "per_request_limits": null,
+        "supported_parameters": [
+          "max_tokens",
+          "temperature",
+          "top_p",
+          "stop",
+          "frequency_penalty",
+          "presence_penalty",
+          "repetition_penalty",
+          "top_k",
+          "min_p",
+          "seed"
+        ]
+      },
+      {
         "id": "alpindale/goliath-120b",
         "hugging_face_id": "alpindale/goliath-120b",
         "name": "Goliath 120B",
@@ -14103,51 +14101,6 @@
           "min_p",
           "seed",
           "top_a"
-        ]
-      },
-      {
-        "id": "undi95/toppy-m-7b",
-        "hugging_face_id": "Undi95/Toppy-M-7B",
-        "name": "Toppy M 7B",
-        "created": 1699574400,
-        "description": "A wild 7B parameter model that merges several models using the new task_arithmetic merge method from mergekit.\nList of merged models:\n- NousResearch/Nous-Capybara-7B-V1.9\n- [HuggingFaceH4/zephyr-7b-beta](/models/huggingfaceh4/zephyr-7b-beta)\n- lemonilia/AshhLimaRP-Mistral-7B\n- Vulkane/120-Days-of-Sodom-LoRA-Mistral-7b\n- Undi95/Mistral-pippa-sharegpt-7b-qlora\n\n#merge #uncensored",
-        "context_length": 4096,
-        "architecture": {
-          "modality": "text->text",
-          "input_modalities": [
-            "text"
-          ],
-          "output_modalities": [
-            "text"
-          ],
-          "tokenizer": "Mistral",
-          "instruct_type": "alpaca"
-        },
-        "pricing": {
-          "prompt": "0.0000008",
-          "completion": "0.0000012",
-          "request": "0",
-          "image": "0",
-          "web_search": "0",
-          "internal_reasoning": "0"
-        },
-        "top_provider": {
-          "context_length": 4096,
-          "max_completion_tokens": 4096,
-          "is_moderated": false
-        },
-        "per_request_limits": null,
-        "supported_parameters": [
-          "max_tokens",
-          "temperature",
-          "top_p",
-          "stop",
-          "frequency_penalty",
-          "presence_penalty",
-          "repetition_penalty",
-          "top_k",
-          "min_p",
-          "seed"
         ]
       },
       {
@@ -14279,6 +14232,52 @@
         ]
       },
       {
+        "id": "openai/gpt-3.5-turbo-instruct",
+        "hugging_face_id": null,
+        "name": "OpenAI: GPT-3.5 Turbo Instruct",
+        "created": 1695859200,
+        "description": "This model is a variant of GPT-3.5 Turbo tuned for instructional prompts and omitting chat-related optimizations. Training data: up to Sep 2021.",
+        "context_length": 4095,
+        "architecture": {
+          "modality": "text->text",
+          "input_modalities": [
+            "text"
+          ],
+          "output_modalities": [
+            "text"
+          ],
+          "tokenizer": "GPT",
+          "instruct_type": "chatml"
+        },
+        "pricing": {
+          "prompt": "0.0000015",
+          "completion": "0.000002",
+          "request": "0",
+          "image": "0",
+          "web_search": "0",
+          "internal_reasoning": "0"
+        },
+        "top_provider": {
+          "context_length": 4095,
+          "max_completion_tokens": 4096,
+          "is_moderated": true
+        },
+        "per_request_limits": null,
+        "supported_parameters": [
+          "max_tokens",
+          "temperature",
+          "top_p",
+          "stop",
+          "frequency_penalty",
+          "presence_penalty",
+          "seed",
+          "logit_bias",
+          "logprobs",
+          "top_logprobs",
+          "response_format"
+        ]
+      },
+      {
         "id": "mistralai/mistral-7b-instruct-v0.1",
         "hugging_face_id": "mistralai/Mistral-7B-Instruct-v0.1",
         "name": "Mistral: Mistral 7B Instruct v0.1",
@@ -14328,52 +14327,6 @@
         ]
       },
       {
-        "id": "openai/gpt-3.5-turbo-instruct",
-        "hugging_face_id": null,
-        "name": "OpenAI: GPT-3.5 Turbo Instruct",
-        "created": 1695859200,
-        "description": "This model is a variant of GPT-3.5 Turbo tuned for instructional prompts and omitting chat-related optimizations. Training data: up to Sep 2021.",
-        "context_length": 4095,
-        "architecture": {
-          "modality": "text->text",
-          "input_modalities": [
-            "text"
-          ],
-          "output_modalities": [
-            "text"
-          ],
-          "tokenizer": "GPT",
-          "instruct_type": "chatml"
-        },
-        "pricing": {
-          "prompt": "0.0000015",
-          "completion": "0.000002",
-          "request": "0",
-          "image": "0",
-          "web_search": "0",
-          "internal_reasoning": "0"
-        },
-        "top_provider": {
-          "context_length": 4095,
-          "max_completion_tokens": 4096,
-          "is_moderated": true
-        },
-        "per_request_limits": null,
-        "supported_parameters": [
-          "max_tokens",
-          "temperature",
-          "top_p",
-          "stop",
-          "frequency_penalty",
-          "presence_penalty",
-          "seed",
-          "logit_bias",
-          "logprobs",
-          "top_logprobs",
-          "response_format"
-        ]
-      },
-      {
         "id": "pygmalionai/mythalion-13b",
         "hugging_face_id": "PygmalionAI/mythalion-13b",
         "name": "Pygmalion: Mythalion 13B",
@@ -14416,55 +14369,6 @@
           "top_k",
           "min_p",
           "seed"
-        ]
-      },
-      {
-        "id": "openai/gpt-4-32k-0314",
-        "hugging_face_id": null,
-        "name": "OpenAI: GPT-4 32k (older v0314)",
-        "created": 1693180800,
-        "description": "GPT-4-32k is an extended version of GPT-4, with the same capabilities but quadrupled context length, allowing for processing up to 40 pages of text in a single pass. This is particularly beneficial for handling longer content like interacting with PDFs without an external vector database. Training data: up to Sep 2021.",
-        "context_length": 32767,
-        "architecture": {
-          "modality": "text->text",
-          "input_modalities": [
-            "text"
-          ],
-          "output_modalities": [
-            "text"
-          ],
-          "tokenizer": "GPT",
-          "instruct_type": null
-        },
-        "pricing": {
-          "prompt": "0.00006",
-          "completion": "0.00012",
-          "request": "0",
-          "image": "0",
-          "web_search": "0",
-          "internal_reasoning": "0"
-        },
-        "top_provider": {
-          "context_length": 32767,
-          "max_completion_tokens": 4096,
-          "is_moderated": true
-        },
-        "per_request_limits": null,
-        "supported_parameters": [
-          "tools",
-          "tool_choice",
-          "max_tokens",
-          "temperature",
-          "top_p",
-          "stop",
-          "frequency_penalty",
-          "presence_penalty",
-          "seed",
-          "logit_bias",
-          "logprobs",
-          "top_logprobs",
-          "response_format",
-          "structured_outputs"
         ]
       },
       {
@@ -14561,6 +14465,55 @@
           "logprobs",
           "top_logprobs",
           "response_format"
+        ]
+      },
+      {
+        "id": "openai/gpt-4-32k-0314",
+        "hugging_face_id": null,
+        "name": "OpenAI: GPT-4 32k (older v0314)",
+        "created": 1693180800,
+        "description": "GPT-4-32k is an extended version of GPT-4, with the same capabilities but quadrupled context length, allowing for processing up to 40 pages of text in a single pass. This is particularly beneficial for handling longer content like interacting with PDFs without an external vector database. Training data: up to Sep 2021.",
+        "context_length": 32767,
+        "architecture": {
+          "modality": "text->text",
+          "input_modalities": [
+            "text"
+          ],
+          "output_modalities": [
+            "text"
+          ],
+          "tokenizer": "GPT",
+          "instruct_type": null
+        },
+        "pricing": {
+          "prompt": "0.00006",
+          "completion": "0.00012",
+          "request": "0",
+          "image": "0",
+          "web_search": "0",
+          "internal_reasoning": "0"
+        },
+        "top_provider": {
+          "context_length": 32767,
+          "max_completion_tokens": 4096,
+          "is_moderated": true
+        },
+        "per_request_limits": null,
+        "supported_parameters": [
+          "tools",
+          "tool_choice",
+          "max_tokens",
+          "temperature",
+          "top_p",
+          "stop",
+          "frequency_penalty",
+          "presence_penalty",
+          "seed",
+          "logit_bias",
+          "logprobs",
+          "top_logprobs",
+          "response_format",
+          "structured_outputs"
         ]
       },
       {
@@ -14880,54 +14833,6 @@
         ]
       },
       {
-        "id": "openai/gpt-4",
-        "hugging_face_id": null,
-        "name": "OpenAI: GPT-4",
-        "created": 1685232000,
-        "description": "OpenAI's flagship model, GPT-4 is a large-scale multimodal language model capable of solving difficult problems with greater accuracy than previous models due to its broader general knowledge and advanced reasoning capabilities. Training data: up to Sep 2021.",
-        "context_length": 8191,
-        "architecture": {
-          "modality": "text->text",
-          "input_modalities": [
-            "text"
-          ],
-          "output_modalities": [
-            "text"
-          ],
-          "tokenizer": "GPT",
-          "instruct_type": null
-        },
-        "pricing": {
-          "prompt": "0.00003",
-          "completion": "0.00006",
-          "request": "0",
-          "image": "0",
-          "web_search": "0",
-          "internal_reasoning": "0"
-        },
-        "top_provider": {
-          "context_length": 8191,
-          "max_completion_tokens": 4096,
-          "is_moderated": true
-        },
-        "per_request_limits": null,
-        "supported_parameters": [
-          "tools",
-          "tool_choice",
-          "max_tokens",
-          "temperature",
-          "top_p",
-          "stop",
-          "frequency_penalty",
-          "presence_penalty",
-          "seed",
-          "logit_bias",
-          "logprobs",
-          "top_logprobs",
-          "response_format"
-        ]
-      },
-      {
         "id": "openai/gpt-3.5-turbo-0125",
         "hugging_face_id": null,
         "name": "OpenAI: GPT-3.5 Turbo 16k",
@@ -14955,6 +14860,54 @@
         },
         "top_provider": {
           "context_length": 16385,
+          "max_completion_tokens": 4096,
+          "is_moderated": true
+        },
+        "per_request_limits": null,
+        "supported_parameters": [
+          "tools",
+          "tool_choice",
+          "max_tokens",
+          "temperature",
+          "top_p",
+          "stop",
+          "frequency_penalty",
+          "presence_penalty",
+          "seed",
+          "logit_bias",
+          "logprobs",
+          "top_logprobs",
+          "response_format"
+        ]
+      },
+      {
+        "id": "openai/gpt-4",
+        "hugging_face_id": null,
+        "name": "OpenAI: GPT-4",
+        "created": 1685232000,
+        "description": "OpenAI's flagship model, GPT-4 is a large-scale multimodal language model capable of solving difficult problems with greater accuracy than previous models due to its broader general knowledge and advanced reasoning capabilities. Training data: up to Sep 2021.",
+        "context_length": 8191,
+        "architecture": {
+          "modality": "text->text",
+          "input_modalities": [
+            "text"
+          ],
+          "output_modalities": [
+            "text"
+          ],
+          "tokenizer": "GPT",
+          "instruct_type": null
+        },
+        "pricing": {
+          "prompt": "0.00003",
+          "completion": "0.00006",
+          "request": "0",
+          "image": "0",
+          "web_search": "0",
+          "internal_reasoning": "0"
+        },
+        "top_provider": {
+          "context_length": 8191,
           "max_completion_tokens": 4096,
           "is_moderated": true
         },
@@ -15026,5 +14979,5 @@
       }
     ]
   },
-  "last_update": "2025-05-25T20:41:47.943661"
+  "last_update": "2025-05-26T09:07:32.917081"
 }

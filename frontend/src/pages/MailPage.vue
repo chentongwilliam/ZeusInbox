@@ -9,8 +9,18 @@
         <button class="px-4 py-2 rounded-t-lg bg-gray-100 text-gray-500 shadow-none">Done</button>
       </div>
       <!-- 邮件列表 -->
-      <div class="bg-white rounded-xl shadow border overflow-x-auto flex-1 flex flex-col items-center justify-center">
-        <div class="text-gray-400 text-lg py-12">{{$t('mail.noMail')}}</div>
+      <div class="bg-white rounded-xl shadow border overflow-x-auto flex-1 flex flex-col">
+        <div v-if="loading" class="text-gray-400 text-lg py-12 text-center">Loading...</div>
+        <div v-else-if="error" class="text-red-500 text-lg py-12 text-center">{{ error }}</div>
+        <div v-else-if="!emails.length" class="text-gray-400 text-lg py-12 text-center">{{ $t('mail.noMail') }}</div>
+        <div v-else>
+          <div v-for="mail in emails" :key="mail.id" class="flex items-center border-b px-4 py-3 hover:bg-gray-50 transition-all">
+            <div class="w-1/5 font-bold truncate">{{ mail.from }}</div>
+            <div class="w-2/5 truncate">{{ mail.subject }}</div>
+            <div class="w-1/6 text-right text-gray-500">{{ formatMailTime(mail.date) }}</div>
+            <div class="flex-1 text-gray-400 text-sm truncate ml-4">{{ mail.snippet }}</div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -84,8 +94,49 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import dayjs from 'dayjs'
 
 const { t } = useI18n()
+
+const emails = ref<any[]>([])
+const loading = ref(true)
+const error = ref('')
+const sidebarWidth = ref(320)
+
+const fetchEmails = async () => {
+  loading.value = true
+  error.value = ''
+  try {
+    // 获取邮箱设置
+    const settingsRes = await fetch('/api/email/settings')
+    const settings = await settingsRes.json()
+    if (!settings || !settings.email) {
+      loading.value = false
+      return
+    }
+    // 获取邮件
+    const res = await fetch('/api/email/emails/latest-list?limit=20')
+    if (!res.ok) throw new Error()
+    emails.value = await res.json()
+  } catch (e) {
+    error.value = t('mail.connectionFailed')
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(() => {
+  fetchEmails()
+})
+
+// 时间格式化
+const formatMailTime = (dateStr: string) => {
+  const date = dayjs(dateStr)
+  if (date.isSame(dayjs(), 'day')) {
+    return date.format('HH:mm')
+  }
+  return date.format('YYYY-MM-DD')
+}
 
 // 聊天消息类型定义
 interface ChatMessage {
@@ -100,7 +151,6 @@ const messages = ref<ChatMessage[]>([])
 const messageText = ref('')
 
 // 侧边栏宽度相关
-const sidebarWidth = ref(320) // 默认宽度
 const minWidth = 200 // 最小宽度
 const maxWidth = 600 // 最大宽度
 let isResizing = false

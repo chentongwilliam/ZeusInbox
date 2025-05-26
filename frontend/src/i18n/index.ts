@@ -105,7 +105,8 @@ const en = {
     settings: 'Settings'
   },
   mail: {
-    noMail: 'No emails yet'
+    noMail: 'No emails yet',
+    connectionFailed: 'Email connection failed, please check your settings'
   },
   chat: {
     examples: {
@@ -223,7 +224,8 @@ const de = {
     settings: 'Einstellungen'
   },
   mail: {
-    noMail: 'Noch keine E-Mails'
+    noMail: 'Noch keine E-Mails',
+    connectionFailed: 'E-Mail-Verbindung fehlgeschlagen, bitte Einstellungen prüfen'
   },
   chat: {
     examples: {
@@ -341,7 +343,8 @@ const zh = {
     settings: '设置'
   },
   mail: {
-    noMail: '暂无邮件'
+    noMail: '暂无邮件',
+    connectionFailed: '邮箱连接失败，请检查设置'
   },
   chat: {
     examples: {
